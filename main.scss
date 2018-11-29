@@ -1,10 +1,13 @@
+html {
+    font-family: "Noto Sans TC", sans-serif;
+}
+
 body {
     display: grid;
     grid-template-columns: auto minmax(20%, max-content);
     grid-template-rows: min-content auto;
     grid-template-areas: "header progress" "form preview";
     grid-gap: 0;
-    padding: 0;
     margin: 0;
     width: 100vw;
     height: 100vh;
@@ -15,57 +18,96 @@ header {
 }
 
 main form {
+    padding: 1em;
     grid-area: form;
     overflow-y: scroll;
 
     fieldset {
+        border: thin solid black;
+        margin: 1em 0;
+        padding: 1em;
+
+        legend {
+            font-size: 1.2em;
+        }
+
         ul {
             list-style-type: none;
             margin: 0;
             padding: 0;
+
             li {
                 margin-bottom: 1em;
+
                 &:last-of-type {
                     margin-bottom: unset;
                 }
 
-                display: grid;
-                grid-template-columns: max-content auto;
-                grid-gap: 1em;
+                div {
+                    margin-top: 0.5em;
+                    display: flex;
 
-                label {
-                    grid-column: 1;
+                    span {
+                        margin-left: 1em;
+                        flex: 0 1;
+                    }
+
+                    input,
+                    textarea,
+                    select {
+                        flex: 1 1 auto;
+                        box-sizing: border-box;
+                        font-size: 0.9em;
+                        font-family: inherit;
+                        background-color: white;
+                        border: thin solid black;
+                        padding: 0.2em 0.4em;
+
+                        &:required + :after {
+                            content: "☐";
+                            color: red;
+                        }
+                        &:required:not(&[value=""]):invalid + :after {
+                            content: "☒";
+                            color: red;
+                        }
+                        &:required:not([value=""]):valid + :after {
+                            content: "☑";
+                            color: green;
+                        }
+                        &::placeholder {
+                            color: darkgray;
+                            font-style: italic;
+                        }
+                    }
+                    textarea {
+                        resize: vertical;
+                        min-height: min-content;
+                        height: auto;
+                    }
                 }
-                input, textarea {
-                    grid-column: 2;
-                }
 
-                details {
-                    // break the detail view (repaired in js)
-                    pointer-events: none;
-                    font-size: 0.7em;
+                input[type="checkbox"].help {
+                    display: inline-block;
+                    -webkit-appearance: none;
+                    appearance: none;
 
-                    > summary {
-                        outline: none !important;
+                    &:after {
+                        content: "?";
+                        padding: 0.5em;
+                        font-size: 1.2em;
+                        cursor: help;
+                    }
+                    & + p.help {
+                        display: none;
+                        color: dimgray;
+                        margin: 0;
+                        padding: 0 1em;
+                        font-size: 0.8em;
+                    }
 
-                        label,
-                        input {
-                            // fix the labels after breaking details
-                            pointer-events: auto;
-                            font-size: 1rem;
-                        }
-
-                        &::-webkit-details-marker {
-                            display: none;
-                        }
-                        &:first-of-type {
-                            list-style-type: none;
-                        }
-                        &:after {
-                            content: "？";
-                            margin-left: 0.5em;
-                            pointer-events: auto;
-                        }
+                    &:checked + p.help {
+                        display: block;
                     }
                 }
             }

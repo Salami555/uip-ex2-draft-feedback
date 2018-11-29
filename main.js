@@ -15,14 +15,13 @@ function form2markdown(formID) {
 		title = `# ${title}\n`;
 
 		const inputs = [...section.querySelectorAll("li")];
-		console.log(inputs);
 		return [title, ...inputs.map(inputSection => {
-			let label = inputSection.querySelector("label").textContent;
-			label = `## ${label}\n`;
+			const labelDOM = inputSection.querySelector("label");
 
-			const value = inputSection.querySelector(":not(label)").value;
+			console.log(labelDOM, labelDOM.control);
+			const value = labelDOM.control.value;
 
-			return `${label}\n${value}\n`;
+			return `## ${labelDOM.textContent}\n\n${value}\n`;
 		})].join('\n');
 	}).join("\n\n");
 }

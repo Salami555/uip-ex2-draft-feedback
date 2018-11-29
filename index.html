@@ -9,6 +9,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC">
 </head>
 
 <body>
@@ -20,20 +21,67 @@
 		<form id="review" autocomplete>
 			<header>
 				<fieldset>
+					<legend>About Yourself</legend>
+					<ul>
+						<li>
+							<label for="expertise">Reviewer Expertise</label>
+							<div>
+								<select required id="expertise" name="expertise">
+									<option value="1">Beginner</option>
+									<option value="2">Knowledgeable</option>
+									<option value="3">Expert</option>
+								</select>
+							</div>
+						</li>
+					</ul>
+				</fieldset>
+				<fieldset>
 					<legend>General</legend>
 					<ul>
 						<li>
-							<details>
-								<summary title="Help">
-									<label for="title">Title</label>
-									<input type="text" id="title" name="title" />
-								</summary>
-								<p>Help Text</p>
-							</details>
+							<label for="title">Title</label>
+							<div>
+								<input required type="text" id="title" name="title" placeholder="Title of the Paper" />
+								<span></span>
+							</div>
 						</li>
 						<li>
-							<label for="description">Description</label>
-							<textarea id="description" name="description"></textarea>
+							<label for="description">Description / Summary</label>
+							<input type="checkbox" class="help"/>
+							<p class="help">Briefly describe the paper and its contribution to computer graphics and interactive techniques. Please give your assessment of the scope and magnitude of the paper's contribution.</p>
+							<div>
+								<textarea required id="description" name="description" rows="5" placeholder="Brief Summary"></textarea>
+								<span></span>
+							</div>
+						</li>
+						<li>
+							<label for="rating">Overall Rating</label>
+							<div>
+								<select required id="rating" name="rating">
+									<option value="1">Definitely reject. I would protest strongly if it's accepted.</option>
+									<option value="2">Probably reject. I would argue against this paper.</option>
+									<option value="3" selected>Possibly accept, but only if others champion it.</option>
+									<option value="4">Probably accept. I would argue for this paper.</option>
+									<option value="5">Definitely accept. I would protest strongly if it's not accepted.</option>
+								</select>
+							</div>
+						</li>
+					</ul>
+				</fieldset>
+				<fieldset>
+					<legend>Feedback</legend>
+					<ul>
+						<li>
+							<label for="strengths">Strengths</label>
+							<div>
+								<textarea id="strengths" name="strengths" rows="5" placeholder="Discuss the strengths."></textarea>
+							</div>
+						</li>
+						<li>
+							<label for="weaknesses">Weaknesses</label>
+							<div>
+								<textarea id="weaknesses" name="weaknesses" rows="5" placeholder="Discuss the weaknesses. Including suggestions for improvements."></textarea>
+							</div>
 						</li>
 					</ul>
 				</fieldset>
