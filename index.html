@@ -9,7 +9,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-	<script src="main.js"></script>
 </head>
 
 <body>
@@ -18,36 +17,40 @@
 		<h2>Technical Paper / Computer Science</h2>
 	</header>
 	<main>
-		<form autocomplete>
+		<form id="review" autocomplete>
 			<header>
 				<fieldset>
 					<legend>General</legend>
-					<section>
-						<label for="title">Title</label>
-						<input type="text" id="title" name="title" />
-					</section>
-					<section>
-						<label for="description">Description</label>
-						<textarea id="description" name="description">
-				</textarea>
-					</section>
+					<ul>
+						<li>
+							<label for="title">Title</label>
+							<input type="text" id="title" name="title" />
+						</li>
+						<li>
+							<label for="description">Description</label>
+							<textarea id="description" name="description"></textarea>
+						</li>
+					</ul>
 				</fieldset>
 			</header>
-			<input type="submit" value="Save">
-			<footer>
-				<ul>
-					<li><button>Save</button></li>
-					<li><button>Print</button></li>
-				</ul>
-				<output>
-
-				</output>
-			</footer>
 		</form>
 	</main>
-	<aside>
-		<progress></progress>
+	<aside id="progress">
+		<progress min="0" max="100" value="0"></progress>
 	</aside>
+	<footer id="preview">
+		<ul id="nav-bar">
+			<li id="update">
+				<label for="auto-update">Autoupdate Preview</label>
+				<input type="checkbox" id="auto-update" onchange="toggleAutoUpdate()" />
+				<button onclick="updatePreview()">Update</button>
+			</li>
+			<li><button onclick="">Save</button></li>
+			<li><button>Print</button></li>
+		</ul>
+		<textarea form="review" id="markdown-preview" readonly></textarea>
+	</footer>
+	<script src="main.js"></script>
 </body>
 
 </html>
