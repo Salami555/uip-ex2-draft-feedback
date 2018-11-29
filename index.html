@@ -23,8 +23,13 @@
 					<legend>General</legend>
 					<ul>
 						<li>
-							<label for="title">Title</label>
-							<input type="text" id="title" name="title" />
+							<details>
+								<summary title="Help">
+									<label for="title">Title</label>
+									<input type="text" id="title" name="title" />
+								</summary>
+								<p>Help Text</p>
+							</details>
 						</li>
 						<li>
 							<label for="description">Description</label>
@@ -40,12 +45,7 @@
 	</aside>
 	<footer id="preview">
 		<ul id="nav-bar">
-			<li id="update">
-				<label for="auto-update">Autoupdate Preview</label>
-				<input type="checkbox" id="auto-update" onchange="toggleAutoUpdate()" />
-				<button onclick="updatePreview()">Update</button>
-			</li>
-			<li><button onclick="">Save</button></li>
+			<li><button onclick="console.log(form2markdown('review'))">Save</button></li>
 			<li><button>Print</button></li>
 		</ul>
 		<textarea form="review" id="markdown-preview" readonly></textarea>

@@ -1,8 +1,8 @@
 body {
     display: grid;
-    grid-template-columns: auto 20%;
+    grid-template-columns: auto minmax(20%, max-content);
     grid-template-rows: min-content auto;
-    grid-template-areas: 'header progress' 'form preview';
+    grid-template-areas: "header progress" "form preview";
     grid-gap: 0;
     padding: 0;
     margin: 0;
@@ -18,14 +18,57 @@ main form {
     grid-area: form;
     overflow-y: scroll;
 
-    section {
-        margin-bottom: 1em;
-        &:last-of-type {
-            margin-bottom: unset;
-        }
+    fieldset {
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            li {
+                margin-bottom: 1em;
+                &:last-of-type {
+                    margin-bottom: unset;
+                }
 
-        label {
-            display: block;
+                display: grid;
+                grid-template-columns: max-content auto;
+                grid-gap: 1em;
+
+                label {
+                    grid-column: 1;
+                }
+                input, textarea {
+                    grid-column: 2;
+                }
+
+                details {
+                    // break the detail view (repaired in js)
+                    pointer-events: none;
+                    font-size: 0.7em;
+
+                    > summary {
+                        outline: none !important;
+
+                        label,
+                        input {
+                            // fix the labels after breaking details
+                            pointer-events: auto;
+                            font-size: 1rem;
+                        }
+
+                        &::-webkit-details-marker {
+                            display: none;
+                        }
+                        &:first-of-type {
+                            list-style-type: none;
+                        }
+                        &:after {
+                            content: "？";
+                            margin-left: 0.5em;
+                            pointer-events: auto;
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -44,7 +87,7 @@ main form {
         list-style-type: none;
         margin: 0;
         padding: 0;
-        
+
         li {
             flex: 1 1 auto;
 
