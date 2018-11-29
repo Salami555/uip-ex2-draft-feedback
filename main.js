@@ -7,6 +7,16 @@ function toggleAutoUpdate() {
 	autoUpdate = autoUpdateDOM.checked;
 }
 
+function textValueForInputElement(inputDOM) {
+	switch (inputDOM.nodeName.toLowerCase()) {
+		case "select":
+			const selection = inputDOM.options[inputDOM.selectedIndex];
+			return selection.textContent;
+		default:
+			return inputDOM.value;
+	}
+}
+
 function form2markdown(formID) {
 	const formDOM = document.getElementById(formID);
 	const sections = [...formDOM.querySelectorAll("fieldset")];
@@ -18,23 +28,24 @@ function form2markdown(formID) {
 		return [title, ...inputs.map(inputSection => {
 			const labelDOM = inputSection.querySelector("label");
 
-			console.log(labelDOM, labelDOM.control);
-			const value = labelDOM.control.value;
+			const value = textValueForInputElement(labelDOM.control);
 
 			return `## ${labelDOM.textContent}\n\n${value}\n`;
 		})].join('\n');
 	}).join("\n\n");
 }
 
-// fix for details-label-structure
-for (const summary of document.getElementsByTagName("summary")) {
-	const label = summary.querySelector("label");
-	if (label) {
-		label.addEventListener('click', (evt => {
-			// prevent details event handling
-			evt.preventDefault();
-			// but do focus the label
-			label.control.focus();
-		}).bind(label));
-	}
+function openPreviewWindow(markdown) {
+	const MDConverter = new showdown.Converter();
+	const preview = window.open("", "Preview", "menubar=no,status=no,toolbar=no,resizable=yes,scrollbars=yes");
+	const html = MDConverter.makeHtml(markdown);
+	preview.document.write(html);
+	return preview;
+}
+
+function printPreview(markdown) {
+	const preview = openPreviewWindow(markdown);
+	preview.print();
+	preview.blur();
+	preview.close();
 }

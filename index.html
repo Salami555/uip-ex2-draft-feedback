@@ -10,6 +10,9 @@
 
 	<link rel="stylesheet" type="text/css" media="screen" href="main.css" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC">
+
+	<script src="main.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js" async></script>
 </head>
 
 <body>
@@ -94,11 +97,11 @@
 	<footer id="preview">
 		<ul id="nav-bar">
 			<li><button onclick="console.log(form2markdown('review'))">Save</button></li>
-			<li><button>Print</button></li>
+			<li><button onclick="openPreviewWindow(form2markdown('review'))">Preview</button></li>
+			<li><button onclick="printPreview(form2markdown('review'))">Print</button></li>
 		</ul>
 		<textarea form="review" id="markdown-preview" readonly></textarea>
 	</footer>
-	<script src="main.js"></script>
 </body>
 
 </html>
