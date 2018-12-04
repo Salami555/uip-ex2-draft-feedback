@@ -1,34 +1,85 @@
+// See HPI Corporate Design Manual
+$hpi-yellow: rgb(246, 168, 0); // use 100%, 60%, 40%
+$hpi-orange: rgb(221, 97, 8);
+$hpi-red: rgb(177, 6, 58);
+$hpi-grey: rgb(90, 96, 101); // use 100%, 70%, 50%, 20%
+$hpi-blue: rgb(0, 122, 158); // use 100%, 60%, 40%, 15%
+
 html {
-    font-family: "Noto Sans TC", sans-serif;
+    font-family: "Noto Sans TC", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 body {
     display: grid;
     grid-template-columns: auto minmax(20%, max-content);
     grid-template-rows: min-content auto;
-    grid-template-areas: "header progress" "form preview";
+    grid-template-areas: "header about" "form preview";
     grid-gap: 0;
     margin: 0;
     width: 100vw;
     height: 100vh;
+    background: white
+        url("https://hpi.de/fileadmin/user_upload/hpi/bilder/hintergruende/startseite_hintergrund_1920x1200.jpg")
+        no-repeat fixed center center;
 }
 
 header {
     grid-area: header;
+    background-color: white;
+    padding: 2em 3em;
+
+    h1 {
+        font-size: 2em;
+        color: $hpi-orange;
+        padding: 0;
+        margin: 0;
+    }
+    h2 {
+        font-size: 1.4em;
+        color: $hpi-red;
+        margin: 0.3em 0 0 0;
+        padding: 0 0.5em 0.2em;
+        border-bottom: thin solid $hpi-red;
+    }
+}
+
+
+input,
+textarea,
+select,
+button {
+    box-sizing: border-box;
+    font-family: inherit;
+    background-color: white;
+    border: thin solid black;
+    padding: 0.2em 0.4em;
 }
 
 main form {
-    padding: 1em;
+    box-sizing: border-box;
+    margin: 0;
+    margin-left: auto;
+    padding: 0 1.5em 3em 1.5em;
+    max-width: 60vw;
     grid-area: form;
-    overflow-y: scroll;
+    background-color: rgba($hpi-orange, 0.6);
 
     fieldset {
-        border: thin solid black;
-        margin: 1em 0;
+        border: none;
+        background-color: white;
+        box-shadow: 0px 0px 9px rgba(black, 0.7);
+        // box-shadow: 0.5em 0.5em 0px 0px $hpi-red;
+        // margin: 1em 0;
         padding: 1em;
 
         legend {
+            box-sizing: border-box;
+            width: 100%;
+            color: $hpi-orange;
+            padding: 2.5em 0.2em 0 0.2em;
             font-size: 1.2em;
+            text-transform: uppercase;
+            border-bottom: thin solid $hpi-orange;
         }
 
         ul {
@@ -46,9 +97,10 @@ main form {
                 div {
                     margin-top: 0.5em;
                     display: flex;
+                    flex-direction: row-reverse;
 
                     span {
-                        margin-left: 1em;
+                        margin-right: 1em;
                         flex: 0 1;
                     }
 
@@ -56,12 +108,7 @@ main form {
                     textarea,
                     select {
                         flex: 1 1 auto;
-                        box-sizing: border-box;
                         font-size: 0.9em;
-                        font-family: inherit;
-                        background-color: white;
-                        border: thin solid black;
-                        padding: 0.2em 0.4em;
 
                         &:required + :after {
                             content: "☐";
@@ -88,6 +135,8 @@ main form {
                 }
 
                 input[type="checkbox"].help {
+                    padding: 0;
+                    border: none;
                     display: inline-block;
                     -webkit-appearance: none;
                     appearance: none;
@@ -115,25 +164,32 @@ main form {
     }
 }
 
-#progress {
-    grid-area: progress;
-    border-left: thin solid black;
+#about {
+    grid-area: about;
+    background: white url("https://hpi.de/fileadmin/templates/img/hpi_logo_srgb_wb_sl1_web80.png") no-repeat center center;
 }
 
 #preview {
     grid-area: preview;
-    border-left: thin solid black;
+    background-color: rgba($hpi-orange, 0.6);
+    padding: 1em;
+    padding-right: 3em;
 
     #nav-bar {
-        display: flex;
+        // display: flex;
+        // flex-direction: column;
         list-style-type: none;
         margin: 0;
         padding: 0;
 
         li {
-            flex: 1 1 auto;
+            display: block;
+            // margin: 0;
+            // 
+            // flex: 1 1 auto;
 
             button {
+
                 width: 100%;
             }
 
