@@ -110,16 +110,17 @@
 		<section>
 			<section>
 				<span>Format:</span>
-				<select>
-					<option>JSON</option>
-					<option>Markdown</option>
-					<option selected>HTML</option>
+				<select id="output-format">
+					<option value="application/json">JSON</option>
+					<option value="text/markdown">Markdown</option>
+					<option value="text/html" selected>Text/HTML</option>
 				</select>
 			</section>
-			<button onclick=""><i class="far fa-eye"></i>Preview</button>
-			<button onclick=""><i class="fas fa-print"></i>Print</button>
-			<button onclick=""><i class="far fa-clipboard"></i>Copy to Clipboard</button>
-			<button onclick=""><i class="fas fa-download"></i>Save as File</button>
+			<button id="preview-action" onclick="Outputter.open()"><i class="far fa-eye"></i>Preview</button>
+			<button id="print-action" onclick="Outputter.print()"><i class="fas fa-print"></i>Print</button>
+			<button id="email-action" onclick="Outputter.mail()" disabled><i class="far fa-envelope"></i>Mail</button>
+			<button id="clipboard-action" onclick="Outputter.clipboard()" disabled><i class="far fa-clipboard"></i>Copy to Clipboard</button>
+			<button id="download-action" onclick="Outputter.download()"><i class="fas fa-download"></i>Save as File</button>
 		</section>
 		<hr>
 		<section>
