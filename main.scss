@@ -25,7 +25,7 @@ body {
     width: 100vw;
     min-width: 820px;
     height: 100vh;
-    background: white
+    background: $hpi-blue
         url("https://hpi.de/fileadmin/user_upload/hpi/bilder/hintergruende/startseite_hintergrund_1920x1200.jpg")
         no-repeat fixed center center;
     overflow-x: hidden;
@@ -50,6 +50,11 @@ header {
         padding: 0 0.5em 0.2em;
         border-bottom: thin solid $hpi-red;
     }
+}
+
+hr {
+    border: none;
+    border-bottom: $border-style;
 }
 
 input,
@@ -230,7 +235,7 @@ main form {
         no-repeat center center;
 }
 
-#preview {
+#nav-bar {
     grid-area: preview;
     top: 2em;
     position: sticky;
@@ -241,20 +246,33 @@ main form {
     background-color: white;
     box-shadow: $box-shadow-style;
 
-    #nav-bar {
+    hr {
+        margin: 1em 0;
+    }
+
+    section {
         display: flex;
         flex-direction: column;
         margin: 0;
-        margin-bottom: 1em;
         padding: 0;
 
-        div {
-            display: flex;
+        > section {
+            flex-direction: row;
             margin-bottom: 0.5em;
 
             span,
             select {
                 flex: 1 1 auto;
+            }
+
+            i {
+                display: inline-block;
+                flex: 0 0 auto;
+                
+                &:before {
+                    font-size: 1.2em;
+                    line-height: 1.2em;
+                }
             }
         }
 

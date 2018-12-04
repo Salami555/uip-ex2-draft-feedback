@@ -106,22 +106,31 @@
 			</fieldset>
 		</form>
 	</main>
-	<aside id="preview">
-		<section id="nav-bar">
-			<div>
+	<aside id="nav-bar">
+		<section>
+			<section>
 				<span>Format:</span>
 				<select>
 					<option>JSON</option>
 					<option>Markdown</option>
 					<option selected>HTML</option>
 				</select>
-			</div>
+			</section>
 			<button onclick=""><i class="far fa-eye"></i>Preview</button>
 			<button onclick=""><i class="fas fa-print"></i>Print</button>
 			<button onclick=""><i class="far fa-clipboard"></i>Copy to Clipboard</button>
 			<button onclick=""><i class="fas fa-download"></i>Save as File</button>
 		</section>
-		<textarea form="review" id="markdown-preview" readonly></textarea>
+		<hr>
+		<section>
+			<section id="autosave">
+				<span>Autosave:</span>
+				<i id="autosave-status" class="far fa-check-circle"></i>
+			</section>
+			<button onclick="FORM.reset()"><i class="fas fa-eraser"></i>Clear all Inputs</button>
+			<button onclick=""><i class="far fa-clipboard"></i>Load from Clipboard</button>
+		</section>
+		<!-- <textarea form="review" id="markdown-preview" readonly></textarea> -->
 	</aside>
 	<footer id="about">
 	</footer>
