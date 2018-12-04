@@ -97,7 +97,12 @@ textarea {
 input[type="checkbox"],
 button,
 select {
-    cursor: pointer;
+    &:disabled {
+        cursor: not-allowed;
+    }
+    &:not(:disabled) {
+        cursor: pointer;
+    }
 }
 textarea {
     resize: vertical;
@@ -260,6 +265,10 @@ main form {
             flex-direction: row;
             margin-bottom: 0.5em;
 
+            span {
+                margin-right: 0.5em;
+            }
+
             span,
             select {
                 flex: 1 1 auto;
@@ -268,7 +277,7 @@ main form {
             i {
                 display: inline-block;
                 flex: 0 0 auto;
-                
+
                 &:before {
                     font-size: 1.2em;
                     line-height: 1.2em;
