@@ -4,6 +4,9 @@ $hpi-orange: rgb(221, 97, 8);
 $hpi-red: rgb(177, 6, 58);
 $hpi-grey: rgb(90, 96, 101); // use 100%, 70%, 50%, 20%
 $hpi-blue: rgb(0, 122, 158); // use 100%, 60%, 40%, 15%
+$border-color: black;
+$border-style: thin solid $border-color;
+$box-shadow-style: 0px 0px 9px rgba(black, 0.7);
 
 html {
     font-family: "Noto Sans TC", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -43,7 +46,6 @@ header {
     }
 }
 
-
 input,
 textarea,
 select,
@@ -51,8 +53,51 @@ button {
     box-sizing: border-box;
     font-family: inherit;
     background-color: white;
-    border: thin solid black;
+    border: $border-style;
     padding: 0.2em 0.4em;
+    transition-delay: 20ms;
+    transition-duration: 200ms;
+    transition-property: background-color, color;
+
+    &::placeholder {
+        color: darkgray;
+        font-style: italic;
+    }
+
+    &:focus,
+    &:active {
+        background-color: rgba($hpi-yellow, 0.6);
+
+        &::placeholder {
+            color: white;
+        }
+    }
+}
+input,
+textarea {
+    cursor: text;
+}
+input[type="checkbox"],
+button,
+select {
+    cursor: pointer;
+}
+textarea {
+    resize: vertical;
+    min-height: min-content;
+    width: auto;
+    height: auto;
+}
+button {
+    transition-delay: 20ms;
+    transition-duration: 200ms;
+    transition-property: background-color;
+
+    &:hover {
+        background-color: rgba($hpi-yellow, 0.6);
+        // border: thin solid transparent;
+        // box-shadow: $box-shadow-style;
+    }
 }
 
 main form {
@@ -67,9 +112,7 @@ main form {
     fieldset {
         border: none;
         background-color: white;
-        box-shadow: 0px 0px 9px rgba(black, 0.7);
-        // box-shadow: 0.5em 0.5em 0px 0px $hpi-red;
-        // margin: 1em 0;
+        box-shadow: $box-shadow-style;
         padding: 1em;
 
         legend {
@@ -122,15 +165,6 @@ main form {
                             content: "☑";
                             color: green;
                         }
-                        &::placeholder {
-                            color: darkgray;
-                            font-style: italic;
-                        }
-                    }
-                    textarea {
-                        resize: vertical;
-                        min-height: min-content;
-                        height: auto;
                     }
                 }
 
@@ -158,6 +192,10 @@ main form {
                     &:checked + p.help {
                         display: block;
                     }
+
+                    &:focus {
+                        background: inherit;
+                    }
                 }
             }
         }
@@ -166,39 +204,36 @@ main form {
 
 #about {
     grid-area: about;
-    background: white url("https://hpi.de/fileadmin/templates/img/hpi_logo_srgb_wb_sl1_web80.png") no-repeat center center;
+    background: white
+        url("https://hpi.de/fileadmin/templates/img/hpi_logo_srgb_wb_sl1_web80.png")
+        no-repeat center center;
 }
 
 #preview {
     grid-area: preview;
-    background-color: rgba($hpi-orange, 0.6);
+    top: 2em;
+    position: sticky;
+    height: min-content;
+    margin: 2em;
+    margin-right: 3em;
     padding: 1em;
-    padding-right: 3em;
+    background-color: white;
+    box-shadow: $box-shadow-style;
 
     #nav-bar {
-        // display: flex;
-        // flex-direction: column;
-        list-style-type: none;
+        display: flex;
+        flex-direction: column;
         margin: 0;
+        margin-bottom: 1em;
         padding: 0;
 
-        li {
+        button {
             display: block;
-            // margin: 0;
-            // 
-            // flex: 1 1 auto;
+            flex: 1 1 auto;
+            width: 100%;
 
-            button {
-
-                width: 100%;
-            }
-
-            &#update {
-                display: flex;
-
-                > * {
-                    flex: 1 1 auto;
-                }
+            &:not(:last-of-type) {
+                border-bottom: none;
             }
         }
     }
