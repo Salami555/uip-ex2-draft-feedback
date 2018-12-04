@@ -13,6 +13,13 @@
 
 	<script src="main.js" async></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js" async></script>
+
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/regular.css" integrity="sha384-z3ccjLyn+akM2DtvRQCXJwvT5bGZsspS4uptQKNXNg778nyzvdMqiGcqHVGiAUyY"
+	 crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/solid.css" integrity="sha384-rdyFrfAIC05c5ph7BKz3l5NG5yEottvO/DQ0dCrwD8gzeQDjYBHNr1ucUpQuljos"
+	 crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/fontawesome.css" integrity="sha384-u5J7JghGz0qUrmEsWzBQkfvc8nK3fUT7DCaQzNQ+q4oEXhGSx+P2OqjWsfIRB8QT"
+	 crossorigin="anonymous">
 </head>
 
 <body>
@@ -29,7 +36,6 @@
 						<label for="title">Title</label>
 						<div>
 							<input required type="text" id="title" name="title" placeholder="Title of the Paper" minlength="8" autofocus />
-							<span></span>
 						</div>
 					</li>
 					<li>
@@ -39,7 +45,6 @@
 							Please give your assessment of the scope and magnitude of the paper's contribution.</p>
 						<div>
 							<textarea required id="description" name="description" rows="5" placeholder="Brief Summary" minlength="40"></textarea>
-							<span></span>
 						</div>
 					</li>
 				</ul>
@@ -103,9 +108,18 @@
 	</main>
 	<aside id="preview">
 		<section id="nav-bar">
-			<button onclick="console.log(form2markdown('review'))">Save</button>
-			<button onclick="openPreviewWindow(form2markdown('review'))">Preview</button>
-			<button onclick="printPreview(form2markdown('review'))">Print</button>
+			<div>
+				<span>Format:</span>
+				<select>
+					<option>JSON</option>
+					<option>Markdown</option>
+					<option selected>HTML</option>
+				</select>
+			</div>
+			<button onclick=""><i class="far fa-eye"></i>Preview</button>
+			<button onclick=""><i class="fas fa-print"></i>Print</button>
+			<button onclick=""><i class="far fa-clipboard"></i>Copy to Clipboard</button>
+			<button onclick=""><i class="fas fa-download"></i>Save as File</button>
 		</section>
 		<textarea form="review" id="markdown-preview" readonly></textarea>
 	</aside>
