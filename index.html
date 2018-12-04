@@ -23,27 +23,12 @@
 	<main>
 		<form id="review" autocomplete>
 			<fieldset>
-				<legend>About Yourself</legend>
-				<ul>
-					<li>
-						<label for="expertise">Reviewer Expertise</label>
-						<div>
-							<select required id="expertise" name="expertise">
-								<option value="1">Beginner</option>
-								<option value="2">Knowledgeable</option>
-								<option value="3">Expert</option>
-							</select>
-						</div>
-					</li>
-				</ul>
-			</fieldset>
-			<fieldset>
 				<legend>General</legend>
 				<ul>
 					<li>
 						<label for="title">Title</label>
 						<div>
-							<input required type="text" id="title" name="title" placeholder="Title of the Paper" />
+							<input required type="text" id="title" name="title" placeholder="Title of the Paper" minlength="8" autofocus />
 							<span></span>
 						</div>
 					</li>
@@ -53,20 +38,8 @@
 						<p class="help">Briefly describe the paper and its contribution to computer graphics and interactive techniques.
 							Please give your assessment of the scope and magnitude of the paper's contribution.</p>
 						<div>
-							<textarea required id="description" name="description" rows="5" placeholder="Brief Summary"></textarea>
+							<textarea required id="description" name="description" rows="5" placeholder="Brief Summary" minlength="40"></textarea>
 							<span></span>
-						</div>
-					</li>
-					<li>
-						<label for="rating">Overall Rating</label>
-						<div>
-							<select required id="rating" name="rating">
-								<option value="-2">Definitely reject. I would protest strongly if it's accepted.</option>
-								<option value="-1">Probably reject. I would argue against this paper.</option>
-								<option value="0" selected>Possibly accept, but only if others champion it.</option>
-								<option value="1">Probably accept. I would argue for this paper.</option>
-								<option value="2">Definitely accept. I would protest strongly if it's not accepted.</option>
-							</select>
 						</div>
 					</li>
 				</ul>
@@ -88,14 +61,52 @@
 					</li>
 				</ul>
 			</fieldset>
+			<fieldset>
+				<legend>Rating</legend>
+				<ul>
+					<li>
+						<label for="rating">Overall rating</label>
+						<div>
+							<select required id="rating" name="rating">
+								<option value="-2">Definitely reject. I would protest strongly if it's accepted.</option>
+								<option value="-1">Probably reject. I would argue against this paper.</option>
+								<option value="0" selected>Possibly accept, but only if others champion it.</option>
+								<option value="1">Probably accept. I would argue for this paper.</option>
+								<option value="2">Definitely accept. I would protest strongly if it's not accepted.</option>
+							</select>
+						</div>
+					</li>
+					<li>
+						<label for="rating-explanation">Explan your rating</label>
+						<div>
+							<textarea id="rating-explanation" name="rating-explanation" rows="5" placeholder="Explain your rating."></textarea>
+						</div>
+					</li>
+				</ul>
+			</fieldset>
+			<fieldset>
+				<legend>About Yourself</legend>
+				<ul>
+					<li>
+						<label for="expertise">Reviewer Expertise</label>
+						<div>
+							<select required id="expertise" name="expertise">
+								<option value="1">Beginner</option>
+								<option value="2">Knowledgeable</option>
+								<option value="3">Expert</option>
+							</select>
+						</div>
+					</li>
+				</ul>
+			</fieldset>
 		</form>
 	</main>
 	<aside id="preview">
-		<ul id="nav-bar">
-			<li><button onclick="console.log(form2markdown('review'))">Save</button></li>
-			<li><button onclick="openPreviewWindow(form2markdown('review'))">Preview</button></li>
-			<li><button onclick="printPreview(form2markdown('review'))">Print</button></li>
-		</ul>
+		<section id="nav-bar">
+			<button onclick="console.log(form2markdown('review'))">Save</button>
+			<button onclick="openPreviewWindow(form2markdown('review'))">Preview</button>
+			<button onclick="printPreview(form2markdown('review'))">Print</button>
+		</section>
 		<textarea form="review" id="markdown-preview" readonly></textarea>
 	</aside>
 	<footer id="about">
