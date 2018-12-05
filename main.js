@@ -90,7 +90,6 @@ class Form {
 		this.element = formDOM;
 		this.values = new Map();
 
-		// const sections = [...formDOM.querySelectorAll('fieldset')];
 		for (const sectionDOM of formDOM.querySelectorAll('fieldset')) {
 			const legend = sectionDOM.querySelector('legend').textContent;
 			// const descriptions = sectionDOM.querySelectorAll('p')
@@ -129,7 +128,7 @@ class Form {
 		return obj;
 	}
 
-	fromJSON(jsonObject) {
+	fromJSONSObject(jsonObject) {
 		for (const legend in jsonObject) {
 			const section = jsonObject[legend];
 			for (const name in section) {
@@ -212,10 +211,12 @@ function load(form) {
 	if (typeof (Storage) !== "undefined") {
 		// save as localStorage
 		const payload = localStorage.getItem(autoSaveName);
-		data = JSON.parse(window.atob(payload));
+		if (payload) {
+			data = JSON.parse(window.atob(payload));
+		}
 	}
 	if (data) {
-		form.fromJSON(data);
+		form.fromJSONSObject(data);
 	}
 	autoSaveStatusDOM.className = autoSaveClassesDone.join(' ');
 }
