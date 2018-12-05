@@ -5,10 +5,12 @@ class Input {
 		this.element = inputDOM;
 		this.type = type;
 		this.onChange = onChange;
-		inputDOM.addEventListener('change', (evt) => {
+		const changeAutoSave = evt => {
 			startAutoSave();
 			this.onChange();
-		});
+		};
+		inputDOM.addEventListener('input', changeAutoSave);
+		inputDOM.addEventListener('change', changeAutoSave);
 	}
 
 	get value() {
@@ -231,7 +233,7 @@ function mimeType() {
 outputFormatDOM.addEventListener('change', () => {
 	// disable emailing for text/html format
 	document.getElementById('email-action').disabled = (mimeType() === 'text/html');
-	document.getElementById('clipboard-action').disabled = (mimeType() === 'text/html');
+	document.getElementById('clipboard-save-action').disabled = (mimeType() === 'text/html');
 });
 
 function getFormattedHTMLTemplate(form, mimeFormat) {
