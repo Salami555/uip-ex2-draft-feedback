@@ -24,7 +24,6 @@ body {
     margin: 0;
     width: 100vw;
     min-width: 820px;
-    height: 100vh;
     background: $hpi-blue
         url("https://hpi.de/fileadmin/user_upload/hpi/bilder/hintergruende/startseite_hintergrund_1920x1200.jpg")
         no-repeat fixed center center;
@@ -94,6 +93,9 @@ input,
 textarea {
     cursor: text;
 }
+button {
+    padding: 0.6em 0.8em;
+}
 input[type="checkbox"],
 button,
 select {
@@ -102,6 +104,28 @@ select {
     }
     &:not(:disabled) {
         cursor: pointer;
+    }
+}
+input,
+textarea,
+select {
+    &:required:invalid {
+        border: thin solid $hpi-red;
+
+        &:focus,
+        &:active,
+        &:hover {
+            box-shadow: $invalid-shadow-style;
+        }
+
+        &:focus,
+        &:active {
+            background-color: rgba($hpi-red, 0.4);
+        }
+    }
+
+    &:required:not([value=""]):valid {
+        border: $border-style;
     }
 }
 textarea {
@@ -164,31 +188,12 @@ main form {
 
                 div {
                     margin-top: 0.5em;
-
+                    
                     input,
                     textarea,
                     select {
                         width: 100%;
                         font-size: 0.9em;
-
-                        &:required:invalid {
-                            border: thin solid $hpi-red;
-
-                            &:focus,
-                            &:active,
-                            &:hover {
-                                box-shadow: $invalid-shadow-style;
-                            }
-
-                            &:focus,
-                            &:active {
-                                background-color: rgba($hpi-red, 0.4);
-                            }
-                        }
-
-                        &:required:not([value=""]):valid {
-                            border: $border-style;
-                        }
                     }
                 }
 
@@ -265,12 +270,11 @@ main form {
             flex-direction: row;
             margin-bottom: 0.5em;
 
-            span {
+            label {
                 margin-right: 0.5em;
             }
 
-            span,
-            select {
+            > * {
                 flex: 1 1 auto;
             }
 
@@ -298,7 +302,7 @@ main form {
             i {
                 display: inline-block;
                 text-align: center;
-                margin-right: 0.6em;
+                margin-right: 0.8em;
                 width: 1em;
             }
         }
