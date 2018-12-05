@@ -8,8 +8,8 @@ $border-color: black;
 $border-style: thin solid $border-color;
 $box-shadow-style: 0 0 0.6em rgba(black, 0.7);
 $input-hover-color: rgba($hpi-yellow, 0.4);
-$highlight-shadow-style: 0 0 0.4em $hpi-yellow;
-$invalid-shadow-style: 0 0 0.4em $hpi-red;
+$highlight-shadow-style: 0 0 0.6em $hpi-yellow;
+$invalid-shadow-style: 0 0 0.5em $hpi-red;
 
 html {
     font-family: "Noto Sans TC", "Helvetica Neue", Helvetica, Arial, sans-serif;
