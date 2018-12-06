@@ -131,12 +131,15 @@ class Form {
 	}
 
 	fromJSONSObject(jsonObject) {
-		for (const legend in jsonObject) {
-			const section = jsonObject[legend];
+		for (const legend in this.structure) {
+			const section = this.structure[legend];
 			for (const name in section) {
-				const newInput = section[name];
+				if(!(legend in jsonObject) || !(name in jsonObject[legend])) {
+					continue;
+				}
+				const newInput = jsonObject[legend][name];
 				const newValue = newInput[newInput.type];
-				const oldInput = this.structure[legend][name];
+				const oldInput = section[name];
 				oldInput.element.value = newValue;
 				oldInput[oldInput.type] = newValue;
 			}
@@ -180,47 +183,43 @@ class Form {
 	}
 }
 
+const autoSaveSupported = (typeof (Storage) !== 'undefined');
 const autoSaveName = 'latestForm';
 const autoSaveStatusDOM = document.getElementById('autosave-status');
 const autoSaveTimeoutDelay = 1000;
-const autoSaveClassesWork = ['fas', 'fa-sync', 'fa-spin'];
-const autoSaveClassesDone = ['far', 'fa-check-circle'];
+const autoSaveClassesWork = ['fas', 'fa-sync', 'fa-spin'].join(' ');
+const autoSaveClassesDone = ['far', 'fa-check-circle'].join(' ');
 let autoSaveTimeout = null;
 function startAutoSave() {
-	autoSaveStatusDOM.className = autoSaveClassesWork.join(' ');
+	if (!autoSaveSupported)
+		return;
+	autoSaveStatusDOM.className = autoSaveClassesWork;
 	if (autoSaveTimeout) {
 		clearTimeout(autoSaveTimeout);
 	}
 	autoSaveTimeout = setTimeout(() => save(FORM), autoSaveTimeoutDelay);
 }
 function save(form) {
+	if (!autoSaveSupported)
+		return;
+	autoSaveStatusDOM.className = autoSaveClassesWork;
 	const payload = window.btoa(form.asJSONString(null));
-	if (typeof (Storage) !== "undefined") {
-		// save as localStorage
-		localStorage.setItem(autoSaveName, payload);
-	}
-	// else {
-	// save as cookie
-	// const expDate = new Date();
-	// expDate.setTime(expDate.getTime() + (31 * 24 * 60 * 60 * 1000));
-	// document.cookie = `${autoSaveName}=${payload};expires=${expDate.toUTCString()}`;
-	// }
-	autoSaveStatusDOM.className = autoSaveClassesDone.join(' ');
+	localStorage.setItem(autoSaveName, payload);
+	autoSaveStatusDOM.className = autoSaveClassesDone;
 }
+window.onbeforeunload = () => save(FORM);
 function load(form) {
-	autoSaveStatusDOM.className = autoSaveClassesWork.join(' ');
-	let data;
-	if (typeof (Storage) !== "undefined") {
-		// save as localStorage
-		const payload = localStorage.getItem(autoSaveName);
-		if (payload) {
-			data = JSON.parse(window.atob(payload));
+	if (!autoSaveSupported)
+		return;
+	autoSaveStatusDOM.className = autoSaveClassesWork;
+	const payload = localStorage.getItem(autoSaveName);
+	if (payload) {
+		const data = JSON.parse(window.atob(payload));
+		if (data) {
+			form.fromJSONSObject(data);
 		}
 	}
-	if (data) {
-		form.fromJSONSObject(data);
-	}
-	autoSaveStatusDOM.className = autoSaveClassesDone.join(' ');
+	autoSaveStatusDOM.className = autoSaveClassesDone;
 }
 
 const FORM = new Form(document.getElementById('review'));
@@ -230,15 +229,19 @@ const outputFormatDOM = document.getElementById('output-format');
 function mimeType() {
 	return outputFormatDOM.value;
 };
+function outputFormat() {
+	return outputFormatDOM.options[outputFormatDOM.selectedIndex].title;
+}
 outputFormatDOM.addEventListener('change', () => {
 	// disable emailing for text/html format
 	document.getElementById('email-action').disabled = (mimeType() === 'text/html');
 	document.getElementById('clipboard-save-action').disabled = (mimeType() === 'text/html');
 });
 
-function getFormattedHTMLTemplate(form, mimeFormat) {
-	const formattedOutput = form.getFormattedOutput(mimeFormat);
-	switch (mimeFormat) {
+function getFormattedHTMLTemplate(form) {
+	const formattedOutput = form.getFormattedOutput(mimeType());
+	const title = `${outputFormat()} Preview`;
+	switch (mimeType()) {
 		case 'application/json':
 			return htmlTemplate('JSON Preview', htmlTemplateJSONViewer(formattedOutput));
 		case 'text/markdown':
@@ -250,7 +253,7 @@ function getFormattedHTMLTemplate(form, mimeFormat) {
 }
 
 function htmlTemplate(title, bodyContent) {
-	return `<!DOCTYPE html><html><head><meta charset="utf-8" /><title>${title}</title><style>body{margin:0} textarea{border:none;width:100%;height:100vh}</style></head><body>${bodyContent}</body></html>`;
+	return `<!DOCTYPE html><html><head><meta charset='utf-8' /><title>${title}</title><style>body{margin:0} textarea{border:none;width:100%;height:100vh}</style></head><body>${bodyContent}</body></html>`;
 }
 function htmlTemplateMarkdownViewer(markdown) {
 	return `<textarea readonly>${markdown}</textarea>`;
@@ -260,17 +263,17 @@ function htmlTemplateJSONViewer(json) {
 }
 
 function openPreviewWindow(html) {
-	const preview = window.open('', 'Preview', 'menubar=no,status=no,toolbar=no,resizable=yes,scrollbars=yes');
+	const preview = window.open('', 'Preview', 'width=600,height=800,menubar=no,status=no,toolbar=no,resizable=yes,scrollbars=yes');
 	preview.document.write(html);
 	return preview;
 }
 
 const Outputter = {
 	open: () => {
-		openPreviewWindow(getFormattedHTMLTemplate(FORM, mimeType()));
+		openPreviewWindow(getFormattedHTMLTemplate(FORM));
 	},
 	print: () => {
-		const preview = openPreviewWindow(getFormattedHTMLTemplate(FORM, mimeType()));
+		const preview = openPreviewWindow(getFormattedHTMLTemplate(FORM));
 		preview.blur();
 		preview.print();
 		while (!preview.closed) {
@@ -280,7 +283,7 @@ const Outputter = {
 	mail: () => {
 		const email = prompt('Send to email-address:', '');
 		if (email == null) return;
-		const subject = `Review Form (${mimeType()})`;
+		const subject = `Review Form (${outputFormat()})`;
 		const emailBody = FORM.getFormattedOutput(mimeType());
 		const mailTo = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
 		// window.location.href = mailTo;
@@ -289,7 +292,15 @@ const Outputter = {
 		mail.click();
 	},
 	clipboard: () => {
-		console.log(FORM.getFormattedOutput(mimeType()));
+		if(!navigator.clipboard) {
+			return alert('Your browser does not support the clipboard API. Fallback not implemented.');
+		}
+		navigator.clipboard.writeText(FORM.getFormattedOutput(mimeType()))
+			.then(() => {
+				alert(`Copied ${outputFormat()} to clipboard!`);
+			}, () => {
+				alert('Copying to clipboard failed. The reasons are unknown...');
+			});
 	},
 	download: () => {
 		switch (mimeType()) {

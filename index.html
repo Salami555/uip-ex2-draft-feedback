@@ -82,7 +82,7 @@
 						</div>
 					</li>
 					<li>
-						<label for="rating-explanation">Explan your rating</label>
+						<label for="rating-explanation">Explain your rating</label>
 						<div>
 							<textarea id="rating-explanation" name="rating-explanation" rows="5" placeholder="Explain your rating."></textarea>
 						</div>
@@ -111,9 +111,9 @@
 			<section>
 				<label for="output-format" accesskey="f"><u>F</u>ormat:</label>
 				<select id="output-format">
-					<option value="application/json">JSON</option>
-					<option value="text/markdown">Markdown</option>
-					<option value="text/html" selected>Text/HTML</option>
+					<option value="application/json" title="JSON">JSON</option>
+					<option value="text/markdown" title="Markdown">Markdown</option>
+					<option value="text/html" title="HTML" selected>Text/HTML</option>
 				</select>
 			</section>
 			<button id="preview-action" accesskey="r" onclick="Outputter.open()"><i class="far fa-eye"></i>P<u>r</u>eview</button>
