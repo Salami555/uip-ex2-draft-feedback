@@ -28,7 +28,8 @@ body {
     min-width: 820px;
     background: $hpi-blue
         url("https://hpi.de/fileadmin/user_upload/hpi/bilder/hintergruende/startseite_hintergrund_1920x1200.jpg")
-        no-repeat fixed center center;
+        no-repeat fixed center bottom;
+    background-size: cover;
     overflow-x: hidden;
 }
 
