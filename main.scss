@@ -8,6 +8,7 @@ $border-color: black;
 $border-style: thin solid $border-color;
 $box-background: white;
 $box-shadow-style: 0 0 0.6em rgba(black, 0.7);
+$box-bottom-shadow-style: 0 0.6em 0.6em -0.6em rgba(black, 0.7);
 $input-hover-color: rgba($hpi-yellow, 0.4);
 $highlight-shadow-style: 0 0 0.6em $hpi-yellow;
 $invalid-shadow-style: 0 0 0.5em $hpi-red;
@@ -31,16 +32,21 @@ body {
     overflow-x: hidden;
 }
 
+header, #about {
+    position: relative;
+    z-index: 5;
+    box-shadow: $box-bottom-shadow-style;
+}
+
 header {
     grid-area: header;
     background-color: $box-background;
     padding: 2em 3em;
-    box-shadow: $box-shadow-style;
 
     h1 {
         font-size: 2em;
         color: $hpi-orange;
-        padding: 0;
+        padding: 0 0 0 0.1em;
         margin: 0;
     }
     h2 {
@@ -50,6 +56,13 @@ header {
         padding: 0 0.5em 0.2em;
         border-bottom: thin solid $hpi-red;
     }
+}
+
+#about {
+    grid-area: about;
+    background: $box-background
+        url("https://hpi.de/fileadmin/templates/img/hpi_logo_srgb_wb_sl1_web80.png")
+        no-repeat center center;
 }
 
 hr {
@@ -151,7 +164,7 @@ button {
 
 main form {
     position: relative;
-    z-index: -1;
+    z-index: 1;
     box-sizing: border-box;
     margin: 0;
     margin-left: auto;
@@ -249,15 +262,9 @@ main form {
     }
 }
 
-#about {
-    grid-area: about;
-    background: $box-background
-        url("https://hpi.de/fileadmin/templates/img/hpi_logo_srgb_wb_sl1_web80.png")
-        no-repeat center center;
-}
-
 #nav-bar {
     grid-area: preview;
+    z-index: 2;
     top: 2em;
     position: sticky;
     height: min-content;
