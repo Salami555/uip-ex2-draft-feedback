@@ -265,7 +265,7 @@ function downloadFile(filename, mimeType, content) {
     const a = document.createElement('a');
     a.download = filename;
     a.rel = 'noopener';
-    a.href = URL.createObjectURL(new Blob([content], { type: mimeType }));
+    a.href = URL.createObjectURL(new Blob([content], { type: `${mimeType};charset=utf-8` }));
     setTimeout(() => URL.revokeObjectURL(a.href), 10000);
     setTimeout(() => a.click(), 0);
 }
