@@ -171,6 +171,20 @@ button {
         background: $hpi-yellow;
     }
 }
+output {
+    text-align: right;
+}
+
+a {
+    display: inline-block;
+    width: 100%;
+    text-decoration: none;
+    color: $hpi-blue;
+
+    &:hover, &:focus, &:active {
+        text-decoration: underline;
+    }
+}
 
 main form {
     position: relative;
@@ -184,21 +198,23 @@ main form {
     grid-area: form;
     background-color: rgba($hpi-orange, 0.6);
 
-    fieldset {
+    section, fieldset {
         border: none;
         background-color: $box-background;
         box-shadow: $box-shadow-style;
         padding: 1em;
         margin: 0em 0 2em 0;
 
-        legend {
+        h3, legend {
             float: left;
             padding: 0;
             margin-bottom: 1em;
+            margin-block-start: unset;
             width: 100%;
             background-color: $box-background;
             color: $hpi-orange;
             font-size: 1.2em;
+            font-weight: initial;
             text-transform: uppercase;
             border-bottom: thin solid $hpi-orange;
             
@@ -269,6 +285,12 @@ main form {
                 }
             }
         }
+    }
+
+    section ul {
+        list-style-type: disc;
+        color: $hpi-orange;
+        padding-left: 1.6em;
     }
 }
 
