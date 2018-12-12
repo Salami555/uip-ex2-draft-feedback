@@ -33,7 +33,8 @@ body {
     overflow-x: hidden;
 }
 
-header, #about {
+header,
+#about {
     position: relative;
     z-index: 5;
     box-shadow: $box-bottom-shadow-style;
@@ -103,7 +104,7 @@ button {
             color: white;
         }
     }
-    
+
     &:disabled {
         cursor: not-allowed;
         &:hover {
@@ -119,18 +120,16 @@ input[type="text"],
 textarea {
     cursor: text !important;
     &:required {
-        background-image: linear-gradient(to top right, transparent 0%, transparent 50%, $hpi-orange 50%, $hpi-orange 100%);
+        background-image: linear-gradient(
+            to top right,
+            transparent 0%,
+            transparent 50%,
+            $hpi-orange 50%,
+            $hpi-orange 100%
+        );
         background-size: 1em 1em;
         background-position: right top;
         background-repeat: no-repeat;
-    }
-}
-button {
-    padding: 0.6em 0.8em;
-
-    &:focus {
-        box-shadow: $highlight-shadow-style, $highlight-shadow-style inset;
-        background-color: unset;
     }
 }
 input,
@@ -161,10 +160,17 @@ textarea {
     width: auto;
     height: auto;
 }
+input[type="button"],
 button {
+    padding: 0.6em 0.8em;
     transition-delay: 20ms;
     transition-duration: 200ms;
     transition-property: background-color;
+
+    &:focus {
+        box-shadow: $highlight-shadow-style, $highlight-shadow-style inset;
+        background-color: unset;
+    }
 
     &:hover {
         background-color: $input-hover-color;
@@ -184,7 +190,9 @@ a {
     text-decoration: none;
     color: $hpi-blue;
 
-    &:hover, &:focus, &:active {
+    &:hover,
+    &:focus,
+    &:active {
         text-decoration: underline;
     }
 }
@@ -201,14 +209,16 @@ main form {
     grid-area: form;
     background-color: rgba($hpi-orange, 0.6);
 
-    > section, fieldset {
+    > section,
+    fieldset {
         border: none;
         background-color: $box-background;
         box-shadow: $box-shadow-style;
         padding: 1em;
         margin: 0em 0 2em 0;
 
-        h3, legend {
+        h3,
+        legend {
             float: left;
             padding: 0;
             margin-bottom: 1em;
@@ -220,9 +230,9 @@ main form {
             font-weight: initial;
             text-transform: uppercase;
             border-bottom: thin solid $hpi-orange;
-            
+
             &:after {
-                content: '';
+                content: "";
                 clear: both;
             }
         }
@@ -231,9 +241,10 @@ main form {
             list-style-type: none;
             margin: 0;
             padding: 0;
+            clear: both;
 
             hr {
-                margin: 2em 0;
+                margin: 2em 0 1.5em 0;
             }
 
             li {
@@ -243,14 +254,13 @@ main form {
                     margin-bottom: unset;
                 }
 
-
                 label {
                     & > input.disable {
                         margin-right: 0.8em;
                     }
 
                     &.required:after {
-                        content: '* Required Field';
+                        content: "* Required Field";
                         margin-left: 0.8em;
                         font-size: 0.8em;
                         color: $hpi-grey;
