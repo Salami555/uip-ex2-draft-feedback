@@ -4,20 +4,46 @@ class Input {
     constructor(inputDOM, type, onChange) {
         this.element = inputDOM;
         this.type = type;
-        this.enabled = true;
+        this.disableCheckbox = null;
         this.onChange = onChange;
+        this.label = this.element.labels[0];
         const changeAutoSave = evt => {
             startAutoSave();
             this.onChange();
         };
+        this.initLabel(changeAutoSave);
         inputDOM.addEventListener('input', changeAutoSave);
         inputDOM.addEventListener('change', changeAutoSave);
-        inputDOM.labels.forEach((label) => {
-            console.log('add checkbox for disabling to ', label);
-		});
-		if(inputDOM.dataset.helpText) {
-			console.log('create help: ', inputDOM.dataset.helpText);
-		}
+
+        if (inputDOM.dataset.helpText) {
+            this.createHelp();
+        }
+    }
+
+    initLabel(onDisable) {
+        if (this.element.required) {
+            this.label.classList.add('required');
+        }
+        this.disableCheckbox = document.createElement('input');
+        this.disableCheckbox.type = 'checkbox';
+        this.disableCheckbox.classList.add('disable');
+        this.disableCheckbox.addEventListener('change', () => {
+            this.element.disabled = !this.disableCheckbox.checked;
+            onDisable();
+        });
+        this.disableCheckbox.checked = !this.element.disabled;
+        this.label.prepend(this.disableCheckbox);
+    }
+
+    createHelp() {
+        const helpOpener = document.createElement('input');
+        helpOpener.type='checkbox';
+        helpOpener.classList.add('help');
+        this.label.parentElement.insertBefore(helpOpener, this.label.nextSibling);
+        const helpText = document.createElement('p');
+        helpText.classList.add('help');
+        helpText.textContent = this.element.dataset.helpText;
+        this.label.parentElement.insertBefore(helpText, helpOpener.nextSibling);
     }
 
     get value() {
@@ -26,6 +52,15 @@ class Input {
 
     get placeholder() {
         return this.element.placeholder;
+    }
+
+    get enabled() {
+        return !this.element.disabled;
+    }
+
+    setEnabled(enabled) {
+        this.element.disabled = !enabled;
+        this.disableCheckbox.checked = !this.element.disabled;
     }
 
     isEmpty() {
@@ -126,12 +161,12 @@ class Form {
             // inputs: inputs
             // };
         }
-	}
-	
-	calculatedScore() {
-		// todo
-		return 0;
-	}
+    }
+
+    calculatedScore() {
+        // todo
+        return 0;
+    }
 
     reset() {
         this.element.reset();
@@ -147,17 +182,20 @@ class Form {
             const section = this.structure[legend];
             for (const name in section) {
                 const input = section[name];
-                obj[legend][name] = input.reducedObject();
+                if (input.enabled) {
+                    obj[legend][name] = input.reducedObject();
+                }
             }
         }
         return obj;
     }
 
-    fromJSONSObject(jsonObject) {
+    fromJSONObject(jsonObject) {
         for (const legend in this.structure) {
             const section = this.structure[legend];
             for (const name in section) {
                 if (!(legend in jsonObject) || !(name in jsonObject[legend])) {
+                    section[name].setEnabled(false);
                     continue;
                 }
                 const newInput = jsonObject[legend][name];
@@ -165,6 +203,9 @@ class Form {
                 const oldInput = section[name];
                 oldInput.element.value = newValue;
                 oldInput[oldInput.type] = newValue;
+                if (newValue) {
+                    section[name].setEnabled(true);
+                }
             }
         }
     }
@@ -180,8 +221,10 @@ class Form {
             const section = jsonObject[legend];
             md.push(`# ${legend}`);
             for (const name in section) {
-                md.push(`## ${name}`);
-                md.push(`${section[name].markdown()}`);
+                if (section[name].enabled) {
+                    md.push(`## ${name}`);
+                    md.push(`${section[name].markdown()}`);
+                }
             }
         }
         return md.join('\n\n');
@@ -242,7 +285,7 @@ function load(form) {
     if (payload) {
         const data = JSON.parse(window.atob(payload));
         if (data) {
-            form.fromJSONSObject(data);
+            form.fromJSONObject(data);
         }
     }
     autoSaveStatusDOM.className = autoSaveClassesDone;

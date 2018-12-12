@@ -2,114 +2,135 @@
 <html>
 
 <head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-	<title>Review Form</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Review Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC">
 
-	<script src="main.js" async></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js" async></script>
+    <script src="main.js" async></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js" async></script>
 
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/regular.css" integrity="sha384-z3ccjLyn+akM2DtvRQCXJwvT5bGZsspS4uptQKNXNg778nyzvdMqiGcqHVGiAUyY"
-	 crossorigin="anonymous">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/solid.css" integrity="sha384-rdyFrfAIC05c5ph7BKz3l5NG5yEottvO/DQ0dCrwD8gzeQDjYBHNr1ucUpQuljos"
-	 crossorigin="anonymous">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/fontawesome.css" integrity="sha384-u5J7JghGz0qUrmEsWzBQkfvc8nK3fUT7DCaQzNQ+q4oEXhGSx+P2OqjWsfIRB8QT"
-	 crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/regular.css" integrity="sha384-z3ccjLyn+akM2DtvRQCXJwvT5bGZsspS4uptQKNXNg778nyzvdMqiGcqHVGiAUyY" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/solid.css" integrity="sha384-rdyFrfAIC05c5ph7BKz3l5NG5yEottvO/DQ0dCrwD8gzeQDjYBHNr1ucUpQuljos" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/fontawesome.css" integrity="sha384-u5J7JghGz0qUrmEsWzBQkfvc8nK3fUT7DCaQzNQ+q4oEXhGSx+P2OqjWsfIRB8QT" crossorigin="anonymous">
 </head>
 
 <body>
-	<header>
-		<h1>Review Form <!-- Version 1.0 --></h1>
-		<h2>Technical Paper / Computer Science</h2>
-	</header>
-	<main>
-		<form id="review" autocomplete>
-			<section>
-				<h3>Primer</h3>
-				<ul>
-					<li><a href="https://www.eg.org/wp/eurographics-publications/guidelines/">Eurographics - Reviewers' Guidelines</a></li>
-					<li><a href="https://s2018.siggraph.org/conference/conference-overview/technical-papers/technical-papers-reviewer-instructions/">SIGGRAPH - Technical Papers Reviewer Instructions</a></li>
-				</ul>
-			</section>
-			<fieldset>
-				<legend>General</legend>
-				<ul>
-					<li>
-						<label for="title">Title</label>
-						<div>
-							<input required type="text" id="title" name="title" placeholder="Title of the Paper" minlength="8" autofocus />
-						</div>
-					</li>
-					<li>
-						<label for="description">Description / Summary</label>
-						<input type="checkbox" class="help" />
-						<p class="help">Briefly describe the paper and its contribution to computer graphics and interactive techniques.
-							Please give your assessment of the scope and magnitude of the paper's contribution.</p>
-						<div>
-							<textarea required id="description" name="description" rows="5" placeholder="Brief Summary" minlength="40" data-outsize-length="400" data-help-text="asdf"></textarea>
-						</div>
-					</li>
-				</ul>
-			</fieldset>
-			<fieldset>
-				<legend>Feedback</legend>
-				<ul>
-					<li>
-						<label for="strengths"><input type="checkbox" />Strengths</label>
-						<div>
-							<textarea id="strengths" name="strengths" rows="5" placeholder="Discuss the strengths." data-outsize-length="400"></textarea>
-						</div>
-					</li>
-					<li>
-						<label for="weaknesses">Weaknesses</label>
-						<div>
-							<textarea id="weaknesses" name="weaknesses" rows="5" placeholder="Discuss the weaknesses. Including suggestions for improvements." data-outsize-length="400"></textarea>
-						</div>
-					</li>
-				</ul>
-			</fieldset>
-			<fieldset>
-				<legend>Rating</legend>
-				<ul>
-					<li>
-						<label for="rating">Overall rating</label>
-						<div>
-							<select required id="rating" name="rating">
+    <header>
+        <h1>Review Form
+            <!-- Version 1.0 -->
+        </h1>
+        <h2>Technical Paper / Computer Science</h2>
+    </header>
+    <main>
+        <form id="review" autocomplete>
+            <section>
+                <h3>Primer</h3>
+                <ul>
+                    <li><a href="https://www.eg.org/wp/eurographics-publications/guidelines/">Eurographics - Reviewers' Guidelines</a></li>
+                    <li><a href="https://s2018.siggraph.org/conference/conference-overview/technical-papers/technical-papers-reviewer-instructions/">SIGGRAPH - Technical Papers Reviewer Instructions</a></li>
+                </ul>
+            </section>
+            <fieldset>
+                <legend>General</legend>
+                <ul>
+                    <li>
+                        <label for="title">Title</label>
+                        <div>
+                            <input required type="text" id="title" name="title" placeholder="Title of the Paper" minlength="8" autofocus />
+                        </div>
+                    </li>
+                    <li>
+                        <label for="description">Description / Summary</label>
+                        <div>
+                            <textarea required id="description" name="description" rows="7" placeholder="Brief Summary" minlength="40" data-outsize-length="400" data-help-text="
+							Briefly describe the paper and its contribution to computer graphics and interactive techniques.
+							Please give your assessment of the scope and magnitude of the paper's contribution."></textarea>
+                        </div>
+                    </li>
+                    <li>
+                        <label for="resubmission">Resubmission Assessment</label>
+                        <div>
+                            <textarea required type="text" id="resubmission" name="resubmission" rows="4" placeholder="Assess the improvements" minlength="20" data-outsize-length="300" data-help-text="
+							If the paper is a resubmission with reviewer continuity, please give your assessment of how the authors took into account comments 
+							from reviewers in the previous review cycle and improved their work. Note that the reviewing system gives you access to the former reviews and that 
+							the authors were instructed to upload a cover letter outlining the changes to their work as supplementary material."></textarea>
+                        </div>
+                    </li>
+                </ul>
+            </fieldset>
+            <fieldset>
+                <legend>Feedback</legend>
+                <ul>
+                    <li>
+                        <label for="strengths">Strengths</label>
+                        <div>
+                            <textarea id="strengths" name="strengths" rows="5" placeholder="Discuss the strengths." data-outsize-length="400"></textarea>
+                        </div>
+                    </li>
+                    <hr />
+                    <li>
+                        <label for="clarity-of-exposure">Clarity of Exposure</label>
+                        <div>
+                            <textarea required id="clarity-of-exposure" name="clarity-of-exposure" rows="4" placeholder="Is the exposition clear? How could it be improved?" min-length="20" data-outsize-length="200"></textarea>
+                        </div>
+                    </li>
+                    <li>
+                        <label for="reproducibility">Reproducibility</label>
+                        <div>
+                            <textarea required id="reproducibility" name="reproducibility" rows="4" placeholder="Would the work be reproducable from the paper?" data-help-text="
+							Could the work be reproduced from the information in the paper? Are all important algorithmic or system details discussed adequately? Are the limitations and drawbacks of the work clear?" min-length="20" data-outsize-length="200"></textarea>
+                        </div>
+                    </li>
+                    <li>
+                        <label for="weaknesses">Weaknesses</label>
+                        <div>
+                            <textarea id="weaknesses" name="weaknesses" rows="5" placeholder="Discuss further weaknesses. Include suggestions for improvements." data-outsize-length="400" disabled></textarea>
+                        </div>
+                    </li>
+                </ul>
+            </fieldset>
+            <fieldset>
+                <legend>Rating</legend>
+                <ul>
+                    <li>
+                        <label for="rating">Overall rating</label>
+                        <div>
+                            <select required id="rating" name="rating">
 								<option value="-2">Definitely reject. I would protest strongly if it's accepted.</option>
 								<option value="-1">Probably reject. I would argue against this paper.</option>
 								<option value="0" selected>Possibly accept, but only if others champion it.</option>
 								<option value="1">Probably accept. I would argue for this paper.</option>
 								<option value="2">Definitely accept. I would protest strongly if it's not accepted.</option>
 							</select>
-						</div>
-					</li>
-					<li>
-						<label for="rating-explanation">Explain your rating</label>
-						<div>
-							<textarea id="rating-explanation" name="rating-explanation" rows="5" placeholder="Explain your rating."></textarea>
-						</div>
-					</li>
-				</ul>
-			</fieldset>
-			<fieldset>
-				<legend>Additional Remarks</legend>
-				<ul>
-					<li>
-						<label for="remark-type">Add Remark</label>
-						<div>
-							<input required type="text" id="remark-type" name="remark-type" list="remark-type-suggestions" placeholder="Remark Type or Category" />
-							<datalist id="remark-type-suggestions">
+                        </div>
+                    </li>
+                    <li>
+                        <label for="rating-explanation">Explain your rating</label>
+                        <div>
+                            <textarea id="rating-explanation" name="rating-explanation" rows="5" placeholder="Explain your rating."></textarea>
+                        </div>
+                    </li>
+                </ul>
+            </fieldset>
+            <fieldset>
+                <legend>Additional Remarks</legend>
+                <ul>
+                    <li>
+                        <label for="remark-type">Add Remark</label>
+                        <div>
+                            <input type="text" id="remark-type" name="remark-type" list="remark-type-suggestions" placeholder="Remark Type or Category" />
+                            <datalist id="remark-type-suggestions">
 								<option>Missing Reference (related Work)</option>
 							</datalist>
-							<input required type="text" id="remark-position" name="remark-position" placeholder="Remark Position (Page, Paragraph)" />
-							<input required type="text" id="remark-content" name="remark-content" placeholder="Remark Text" />
-							<button>Add</button>
-<!--
+                            <input type="text" id="remark-position" name="remark-position" placeholder="Position (Page $, Paragraph $)" />
+                            <textarea id="remark-content" name="remark-content" rows="2" placeholder="" minlength="20"></textarea>
+                            <button>Add</button>
+                            <!--
 • Fehlende Referenz (verwandte Arbeit),
 • Fehlender Verweis auf Abbildungen, Tabellen, Listen, Algorithmen, etc.,
 • Grammatikfehler oder Rechtschreibfehler, optional mit Korrekturvorschlag,
@@ -117,63 +138,63 @@
 • Ungünstige/Missverständliche Wortwahl optional mit Vorschlag,
 • Formatierungsfehler oder -problem
 -->
-						</div>
-						<hr />
-						<ul>
-							<li>Remark .... <button>Remove</button></li>
-						</ul>
-					</li>
-				</ul>
-			</fieldset>
-			<fieldset>
-				<legend>About Yourself</legend>
-				<ul>
-					<li>
-						<label for="expertise">Reviewer Expertise</label>
-						<div>
-							<select required id="expertise" name="expertise">
+                        </div>
+                        <hr />
+                        <ul>
+                            <li>Remark .... <button>Remove</button></li>
+                        </ul>
+                    </li>
+                </ul>
+            </fieldset>
+            <fieldset>
+                <legend>About Yourself</legend>
+                <ul>
+                    <li>
+                        <label for="expertise">Reviewer Expertise</label>
+                        <div>
+                            <select required id="expertise" name="expertise">
 								<option value="1">Beginner</option>
 								<option value="2">Knowledgeable</option>
 								<option value="3">Expert</option>
 							</select>
-						</div>
-					</li>
-				</ul>
-			</fieldset>
-		</form>
-	</main>
-	<aside id="nav-bar">
-		<section>
-			<section>
-				<label for="output-format" accesskey="f"><u>F</u>ormat:</label>
-				<select id="output-format">
+                        </div>
+                    </li>
+                </ul>
+            </fieldset>
+        </form>
+    </main>
+    <aside id="nav-bar">
+        <section>
+            <section>
+                <label for="output-format" accesskey="f"><u>F</u>ormat:</label>
+                <select id="output-format">
 					<option value="application/json" title="JSON">JSON</option>
 					<option value="text/markdown" title="Markdown">Markdown</option>
 					<option value="text/html" title="HTML" selected>Text/HTML</option>
 				</select>
-			</section>
-			<button id="preview-action" accesskey="r" onclick="Outputter.open()"><i class="far fa-eye"></i>P<u>r</u>eview</button>
-			<button id="print-action" accesskey="p" onclick="Outputter.print()"><i class="fas fa-print"></i><u>P</u>rint</button>
-			<button id="email-action" accesskey="m" onclick="Outputter.mail()" title="HTML formatted emails are not supported by browsers" disabled><i class="far fa-envelope"></i>E<u>M</u>ail</button>
-			<button id="clipboard-save-action" accesskey="c" onclick="Outputter.clipboard()"><i class="far fa-clipboard"></i><u>C</u>opy to Clipboard</button>
-			<button id="download-action" accesskey="s" onclick="Outputter.download()"><i class="fas fa-download"></i><u>S</u>ave as File</button>
-		</section>
-		<hr>
-		<section>
-				<section id="score">
-					<span>Score:</span>
-					<output id="review-score" form="review">0</output>
-				</section>
-			<section id="autosave">
-				<span>Autosave:</span>
-				<i id="autosave-status" class="far fa-check-circle"></i>
-			</section>
-			<button id="reset-action" onclick="clearForm()"><i class="fas fa-eraser"></i>Clear all Inputs</button>
-			<!-- <button id="clipboard-load-action" onclick=""><i class="far fa-clipboard"></i>Load from Clipboard</button> -->
-		</section>
-	</aside>
-	<footer id="about">
-	</footer>
+            </section>
+            <button id="preview-action" accesskey="r" onclick="Outputter.open()"><i class="far fa-eye"></i>P<u>r</u>eview</button>
+            <button id="print-action" accesskey="p" onclick="Outputter.print()"><i class="fas fa-print"></i><u>P</u>rint</button>
+            <button id="email-action" accesskey="m" onclick="Outputter.mail()" title="HTML formatted emails are not supported by browsers" disabled><i class="far fa-envelope"></i>E<u>M</u>ail</button>
+            <button id="clipboard-save-action" accesskey="c" onclick="Outputter.clipboard()"><i class="far fa-clipboard"></i><u>C</u>opy to Clipboard</button>
+            <button id="download-action" accesskey="s" onclick="Outputter.download()"><i class="fas fa-download"></i><u>S</u>ave as File</button>
+        </section>
+        <hr>
+        <section>
+            <section id="score">
+                <span>Score:</span>
+                <output id="review-score" form="review">0</output>
+            </section>
+            <section id="autosave">
+                <span>Autosave:</span>
+                <i id="autosave-status" class="far fa-check-circle"></i>
+            </section>
+            <button id="reset-action" onclick="clearForm()"><i class="fas fa-eraser"></i>Clear all Inputs</button>
+            <!-- <button id="clipboard-load-action" onclick=""><i class="far fa-clipboard"></i>Load from Clipboard</button> -->
+        </section>
+    </aside>
+    <footer id="about">
+    </footer>
 </body>
 
 </html>

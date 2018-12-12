@@ -103,22 +103,7 @@ button {
             color: white;
         }
     }
-}
-input,
-textarea {
-    cursor: text;
-}
-button {
-    padding: 0.6em 0.8em;
-
-    &:focus {
-        box-shadow: $highlight-shadow-style, $highlight-shadow-style inset;
-        background-color: unset;
-    }
-}
-input[type="checkbox"],
-button,
-select {
+    
     &:disabled {
         cursor: not-allowed;
         &:hover {
@@ -128,6 +113,24 @@ select {
     }
     &:not(:disabled) {
         cursor: pointer;
+    }
+}
+input[type="text"],
+textarea {
+    cursor: text !important;
+    &:required {
+        background-image: linear-gradient(to top right, transparent 0%, transparent 50%, $hpi-orange 50%, $hpi-orange 100%);
+        background-size: 1em 1em;
+        background-position: right top;
+        background-repeat: no-repeat;
+    }
+}
+button {
+    padding: 0.6em 0.8em;
+
+    &:focus {
+        box-shadow: $highlight-shadow-style, $highlight-shadow-style inset;
+        background-color: unset;
     }
 }
 input,
@@ -198,7 +201,7 @@ main form {
     grid-area: form;
     background-color: rgba($hpi-orange, 0.6);
 
-    section, fieldset {
+    > section, fieldset {
         border: none;
         background-color: $box-background;
         box-shadow: $box-shadow-style;
@@ -236,37 +239,59 @@ main form {
                     margin-bottom: unset;
                 }
 
-                div {
+
+                label {
+                    & > input.disable {
+                        margin-right: 0.8em;
+                    }
+
+                    &.required:after {
+                        content: '* Required Field';
+                        margin-left: 0.8em;
+                        font-size: 0.8em;
+                        color: $hpi-grey;
+                    }
+                }
+
+                > div {
                     margin-top: 0.5em;
+                    display: flex;
 
                     input,
                     textarea,
                     select {
-                        width: 100%;
+                        flex: 1 1 auto;
+                        // width: 100%;
                         font-size: 0.9em;
+                    }
+
+                    textarea {
+                        flex-basis: 100%;
                     }
                 }
 
                 input[type="checkbox"].help {
+                    display: block;
+                    float: right;
                     padding: 0;
                     border: none;
                     border-radius: 50%;
-                    display: inline-block;
                     -webkit-appearance: none;
                     appearance: none;
 
                     &:after {
                         content: "?";
                         padding: 0.5em;
-                        font-size: 1.2em;
+                        font-weight: bold;
+                        font-size: 1.3em;
                         cursor: help;
                     }
                     & + p.help {
                         display: none;
                         color: dimgray;
-                        margin: 0;
+                        margin: 0.6em 0 1em 0;
                         padding: 0 1em;
-                        font-size: 0.8em;
+                        font-size: 0.9em;
                     }
 
                     &:checked + p.help {
@@ -276,11 +301,11 @@ main form {
                     &:focus {
                         background: inherit;
                         box-shadow: $highlight-shadow-style;
+                    }
 
-                        &:checked {
-                            border: none;
-                            background: rgba($hpi-yellow, 0.6);
-                        }
+                    &:checked {
+                        border: none;
+                        background: rgba($hpi-yellow, 0.6);
                     }
                 }
             }
