@@ -80,10 +80,22 @@
                         </div>
                     </li>
                     <li>
+                        <label for="quality-of-references">Quality of References</label>
+                        <div>
+                            <textarea required id="quality-of-references" name="quality-of-references" rows="4" placeholder="Check the referencing for accuracy, adequacy and balance." min-length="20" data-outsize-length="200" data-help-text="You can suggest further references in the remark section."></textarea>
+                        </div>
+                    </li>
+                    <li>
                         <label for="reproducibility">Reproducibility</label>
                         <div>
                             <textarea required id="reproducibility" name="reproducibility" rows="4" placeholder="Would the work be reproducable from the paper?" data-help-text="
 							Could the work be reproduced from the information in the paper? Are all important algorithmic or system details discussed adequately? Are the limitations and drawbacks of the work clear?" min-length="20" data-outsize-length="200"></textarea>
+                        </div>
+                    </li>
+                    <li>
+                        <label for="technical-soundness">Technical Soundness</label>
+                        <div>
+                            <textarea required id="technical-soundness" name="technical-soundness" rows="4" placeholder="Is the implementation sound?" min-length="20" data-outsize-length="200"></textarea>
                         </div>
                     </li>
                     <li>
@@ -115,33 +127,52 @@
                             <textarea id="rating-explanation" name="rating-explanation" rows="5" placeholder="Explain your rating."></textarea>
                         </div>
                     </li>
+                    <hr />
+                    <li>
+                        <label for="rating-related-work">Related Work</label>
+                        <div>
+                            <select required id="rating-related-work" name="rating-related-work" data-help-text="
+							Discussing related work is important for several reasons. It sets the stage for the research and allows the authors to clarify their own contribution. 
+							What have other researchers done? What kind of gap is there in the previous research? 
+							How does the work presented in the paper fill that gap or improve or extend previous work and results?">
+								<option value="1">No discussion of related work</option>
+								<option value="2">Several important or key references missing, and relationship of references to submission not apparent</option>
+								<option value="3">Some references missing, or their relationship to submission not clearly described</option>
+								<option value="4">Covers key related work; its relationship to submission is described, but could be extended further</option>
+								<option value="5" selected>All relevant work discussed and cited, and relationship to submission clearly and thoroughly described</option>
+							</select>
+                        </div>
+                    </li>
+                    <li>
+                        <label for="rating-related-work-explanation">Explain your rating</label>
+                        <div>
+                            <textarea id="rating-related-work-explanation" name="rating-related-work-explanation" rows="2" placeholder="Explain your rating."></textarea>
+                        </div>
+                    </li>
                 </ul>
             </fieldset>
             <fieldset>
                 <legend>Additional Remarks</legend>
                 <ul>
                     <li>
-                        <label for="remark-type">Add Remark</label>
+                        <label for="remark-type" data-list-input="remark-list">Add Remark</label>
                         <div>
                             <input type="text" id="remark-type" name="remark-type" list="remark-type-suggestions" placeholder="Remark Type or Category" />
                             <datalist id="remark-type-suggestions">
-								<option>Missing Reference (related Work)</option>
+								<option>Missing Reference (Related Work)</option>
+								<option>Missing Link (to Figure, Table, List, Algorithm, ...)</option>
+								<option>Missing Definition</option>
+								<option>Ambiguous/Adverse Wording</option>
+								<option>Grammatical Error</option>
+								<option>Formatting Error</option>
 							</datalist>
                             <input type="text" id="remark-position" name="remark-position" placeholder="Position (Page $, Paragraph $)" />
-                            <textarea id="remark-content" name="remark-content" rows="2" placeholder="" minlength="20"></textarea>
+                            <textarea id="remark-content" name="remark-content" rows="2" placeholder="Describe the remark and suggest alternatives" minlength="20"></textarea>
                             <button>Add</button>
-                            <!--
-• Fehlende Referenz (verwandte Arbeit),
-• Fehlender Verweis auf Abbildungen, Tabellen, Listen, Algorithmen, etc.,
-• Grammatikfehler oder Rechtschreibfehler, optional mit Korrekturvorschlag,
-• Fehlende Begriffsdefinition,
-• Ungünstige/Missverständliche Wortwahl optional mit Vorschlag,
-• Formatierungsfehler oder -problem
--->
                         </div>
                         <hr />
-                        <ul>
-                            <li>Remark .... <button>Remove</button></li>
+                        <ul id="remark-list">
+                            <!-- <li><p>TODO: create remarks here</p> <button>Remove</button></li> -->
                         </ul>
                     </li>
                 </ul>

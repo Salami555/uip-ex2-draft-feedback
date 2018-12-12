@@ -232,6 +232,10 @@ main form {
             margin: 0;
             padding: 0;
 
+            hr {
+                margin: 2em 0;
+            }
+
             li {
                 margin-bottom: 1em;
 
@@ -256,17 +260,18 @@ main form {
                 > div {
                     margin-top: 0.5em;
                     display: flex;
+                    flex-flow: row wrap;
 
                     input,
                     textarea,
                     select {
                         flex: 1 1 auto;
-                        // width: 100%;
+                        width: 100%; //TODO
                         font-size: 0.9em;
                     }
 
                     textarea {
-                        flex-basis: 100%;
+                        flex-basis: 80%;
                     }
                 }
 

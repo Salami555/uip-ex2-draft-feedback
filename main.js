@@ -1,21 +1,21 @@
 'use strict';
 
 class Input {
-    constructor(inputDOM, type, onChange) {
-        this.element = inputDOM;
+    constructor(labelDOM, type, onChange) {
+        this.element = labelDOM.control;
         this.type = type;
         this.disableCheckbox = null;
         this.onChange = onChange;
-        this.label = this.element.labels[0];
+        this.label = labelDOM;
         const changeAutoSave = evt => {
             startAutoSave();
             this.onChange();
         };
         this.initLabel(changeAutoSave);
-        inputDOM.addEventListener('input', changeAutoSave);
-        inputDOM.addEventListener('change', changeAutoSave);
+        this.element.addEventListener('input', changeAutoSave);
+        this.element.addEventListener('change', changeAutoSave);
 
-        if (inputDOM.dataset.helpText) {
+        if (this.element.dataset.helpText) {
             this.createHelp();
         }
     }
@@ -68,12 +68,13 @@ class Input {
     }
 }
 Input.Text = class extends Input {
-    constructor(inputDOM) {
-        super(inputDOM, 'text', () => {
-            this.text = inputDOM.value;
+    constructor(labelDOM) {
+        super(labelDOM, 'text', () => {
+            this.text = this.element.value;
         });
-        if (inputDOM.minLength > 0) {
-            console.log('Add character counter to', inputDOM);
+        this.text = null;
+        if (this.element.minLength > 0) {
+            console.log('Add character counter to', this.element);
         }
         this.onChange();
     }
@@ -94,12 +95,13 @@ Input.Text = class extends Input {
     }
 };
 Input.Selection = class extends Input {
-    constructor(inputDOM) {
-        super(inputDOM, 'selection', () => {
-            this.selection = inputDOM.options[inputDOM.options.selectedIndex].value;
+    constructor(labelDOM) {
+        super(labelDOM, 'selection', () => {
+            this.selection = this.element.options[this.element.options.selectedIndex].value;
         });
+        this.selection = null;
         this.choices = new Map();
-        for (const option of inputDOM.options) {
+        for (const option of this.element.options) {
             this.choices.set(option.value, option.textContent);
         }
         this.onChange();
@@ -124,14 +126,46 @@ Input.Selection = class extends Input {
         return choices.join('\n');
     }
 };
+Input.List = class extends Input {
+    constructor(labelDOM) {
+        super(labelDOM, 'list', () => {
+            this.elements = [...this.element.children].map((child) => {
+                const p = child.querySelector('p');
+                return p.textContent;
+            });
+        });
+        this.element = document.getElementById(labelDOM.dataset.listInput);
+        this.elements = [];
+        // TODO
+    }
+
+    reducedObject() {
+        return {
+            type: this.type,
+            elements: this.elements
+        }
+    }
+
+    markdown() {
+        const list = [];
+        this.elements.forEach((value, key) => {
+            list.push(`  - ${value}`);
+        });
+        return list.join('\n');
+    }
+}
 
 class Form {
-    static initInputElement(inputDOM) {
-        switch (inputDOM.nodeName.toLowerCase()) {
+    static initInputElement(labelDOM) {
+        if(labelDOM.dataset.listInput) {
+            return new Input.List(labelDOM);
+        }
+
+        switch (labelDOM.control.nodeName.toLowerCase()) {
             case 'select':
-                return new Input.Selection(inputDOM);
+                return new Input.Selection(labelDOM);
             default:
-                return new Input.Text(inputDOM);
+                return new Input.Text(labelDOM);
         }
         return input;
     }
@@ -148,7 +182,7 @@ class Form {
             const inputs = {};
             for (const labelDOM of sectionDOM.querySelectorAll('label')) {
                 const name = labelDOM.textContent;
-                const input = Form.initInputElement(labelDOM.control);
+                const input = Form.initInputElement(labelDOM);
                 this.values.set([legend, name], input);
                 inputs[name] = input;
                 if (name === 'Title') {
