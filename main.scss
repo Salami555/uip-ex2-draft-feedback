@@ -121,6 +121,10 @@ button,
 select {
     &:disabled {
         cursor: not-allowed;
+        &:hover {
+            background-color: rgba($hpi-grey, 0.2);
+            box-shadow: none;
+        }
     }
     &:not(:disabled) {
         cursor: pointer;

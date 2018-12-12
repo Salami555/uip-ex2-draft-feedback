@@ -118,8 +118,8 @@
 			</section>
 			<button id="preview-action" accesskey="r" onclick="Outputter.open()"><i class="far fa-eye"></i>P<u>r</u>eview</button>
 			<button id="print-action" accesskey="p" onclick="Outputter.print()"><i class="fas fa-print"></i><u>P</u>rint</button>
-			<button id="email-action" accesskey="m" onclick="Outputter.mail()" disabled><i class="far fa-envelope"></i>E<u>M</u>ail</button>
-			<button id="clipboard-save-action" accesskey="c" onclick="Outputter.clipboard()" disabled><i class="far fa-clipboard"></i><u>C</u>opy to Clipboard</button>
+			<button id="email-action" accesskey="m" onclick="Outputter.mail()" title="HTML formatted emails are not supported by browsers" disabled><i class="far fa-envelope"></i>E<u>M</u>ail</button>
+			<button id="clipboard-save-action" accesskey="c" onclick="Outputter.clipboard()"><i class="far fa-clipboard"></i><u>C</u>opy to Clipboard</button>
 			<button id="download-action" accesskey="s" onclick="Outputter.download()"><i class="fas fa-download"></i><u>S</u>ave as File</button>
 		</section>
 		<hr>
@@ -129,7 +129,7 @@
 				<i id="autosave-status" class="far fa-check-circle"></i>
 			</section>
 			<button id="reset-action" onclick="FORM.reset()"><i class="fas fa-eraser"></i>Clear all Inputs</button>
-			<button id="clipboard-load-action" onclick=""><i class="far fa-clipboard"></i>Load from Clipboard</button>
+			<!-- <button id="clipboard-load-action" onclick=""><i class="far fa-clipboard"></i>Load from Clipboard</button> -->
 		</section>
 	</aside>
 	<footer id="about">

@@ -41,11 +41,11 @@ Input.Text = class extends Input {
     };
 
     markdown() {
-		let md = `*${this.placeholder}*`;
-		if(!this.isEmpty()) {
-			md += `\n\n> ${this.value}`;
-		}
-		return md;
+        let md = `*${this.placeholder}*`;
+        if (!this.isEmpty()) {
+            md += `\n\n> ${this.value}`;
+        }
+        return md;
     }
 };
 Input.Selection = class extends Input {
@@ -247,8 +247,17 @@ function outputFormat() {
 }
 outputFormatDOM.addEventListener('change', () => {
     // disable emailing for text/html format
-    document.getElementById('email-action').disabled = (mimeType() === 'text/html');
-    document.getElementById('clipboard-save-action').disabled = (mimeType() === 'text/html');
+    const isHtml = (mimeType() === 'text/html');
+    const emailBtn = document.getElementById('email-action');
+    emailBtn.disabled = isHtml;
+    if (isHtml) {
+        emailBtn.title = emailBtn.dataset.htmlDisabledTitle;
+    } else {
+        if (emailBtn.title) {
+            emailBtn.dataset.htmlDisabledTitle = emailBtn.title;
+        }
+        emailBtn.title = '';
+    }
 });
 
 function getFormattedHTMLTemplate() {
@@ -334,8 +343,8 @@ const Outputter = {
                 filename += '.md';
                 break;
             case 'text/html':
-			formattedOutput = htmlTemplate(filename, formattedOutput);
-				filename += '.html';
+                formattedOutput = htmlTemplate(filename, formattedOutput);
+                filename += '.html';
                 break;
         }
         downloadFile(filename, mimeType(), formattedOutput);
