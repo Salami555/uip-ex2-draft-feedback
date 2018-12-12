@@ -7,20 +7,22 @@ class Input {
         this.disableCheckbox = null;
         this.onChange = onChange;
         this.label = labelDOM;
-        const changeAutoSave = evt => {
+        this.autoSave = evt => {
             startAutoSave();
             this.onChange();
         };
-        this.initLabel(changeAutoSave);
-        this.element.addEventListener('input', changeAutoSave);
-        this.element.addEventListener('change', changeAutoSave);
+        if (this.element) {
+            this.initLabel();
+            this.element.addEventListener('input', this.autoSave);
+            this.element.addEventListener('change', this.autoSave);
 
-        if (this.element.dataset.helpText) {
-            this.createHelp();
+            if (this.element.dataset.helpText) {
+                this.createHelp();
+            }
         }
     }
 
-    initLabel(onDisable) {
+    initLabel() {
         if (this.element.required) {
             this.label.classList.add('required');
         }
@@ -29,7 +31,7 @@ class Input {
         this.disableCheckbox.classList.add('disable');
         this.disableCheckbox.addEventListener('change', () => {
             this.element.disabled = !this.disableCheckbox.checked;
-            onDisable();
+            this.autoSave();
         });
         this.disableCheckbox.checked = !this.element.disabled;
         this.label.prepend(this.disableCheckbox);
@@ -37,7 +39,7 @@ class Input {
 
     createHelp() {
         const helpOpener = document.createElement('input');
-        helpOpener.type='checkbox';
+        helpOpener.type = 'checkbox';
         helpOpener.classList.add('help');
         this.label.parentElement.insertBefore(helpOpener, this.label.nextSibling);
         const helpText = document.createElement('p');
@@ -56,6 +58,14 @@ class Input {
 
     get enabled() {
         return !this.element.disabled;
+    }
+
+    setValue(newValue) {
+        this.element.value = newValue;
+        this[this.type] = newValue;
+        if (newValue) {
+            this.setEnabled(true);
+        }
     }
 
     setEnabled(enabled) {
@@ -128,15 +138,45 @@ Input.Selection = class extends Input {
 };
 Input.List = class extends Input {
     constructor(labelDOM) {
-        super(labelDOM, 'list', () => {
-            this.elements = [...this.element.children].map((child) => {
-                const p = child.querySelector('p');
-                return p.textContent;
-            });
+        super(labelDOM, 'list', () => { });
+        this.createBtn = document.getElementById(labelDOM.dataset.elementsAdd);
+        this.createBtn.addEventListener('click', () => this.addElement());
+        this.elementList = document.getElementById(labelDOM.dataset.elementsList);
+        // this.elements = [];
+        this.onChange();
+    }
+
+    setValue(newValue) {
+
+    }
+
+    get elements() {
+        return [...this.elementList.children]
+        .fiter((child) => child && child.querySelector('p'))
+        .map((child) => {
+            const p = child.querySelector('p');
+            return p.textContent;
         });
-        this.element = document.getElementById(labelDOM.dataset.listInput);
-        this.elements = [];
-        // TODO
+    }
+
+    addElement() {
+        // <input type="text" id="remark-type" name="remark-type" list="remark-type-suggestions"
+        // placeholder="Remark Type or Category" />
+        const li = document.createElement('li');
+        const textarea = document.createElement('textarea');
+        textarea.rows = 2;
+        textarea.placeholder = 'Position (Page, Paragraph); Describe the remark and suggest alternatives';
+        textarea.minLength = 20;
+        textarea.addEventListener('input', this.autoSave);
+        textarea.addEventListener('change', this.autoSave);
+        li.appendChild(textarea);
+        const removeBtn = document.createElement('input');
+        removeBtn.type = 'button';
+        removeBtn.innerHTML = '<i class="far fa-trash-alt"></i> Remove';
+        removeBtn.addEventListener('click', () => li.remove());
+        li.appendChild(removeBtn);
+        this.elementList.appendChild(li);
+        console.log(this.elementList);
     }
 
     reducedObject() {
@@ -153,23 +193,22 @@ Input.List = class extends Input {
         });
         return list.join('\n');
     }
+};
+
+function initInputElement(labelDOM) {
+    if (labelDOM.dataset.listInput) {
+        return new Input.List(labelDOM);
+    }
+
+    switch (labelDOM.control.nodeName.toLowerCase()) {
+        case 'select':
+            return new Input.Selection(labelDOM);
+        default:
+            return new Input.Text(labelDOM);
+    }
 }
 
 class Form {
-    static initInputElement(labelDOM) {
-        if(labelDOM.dataset.listInput) {
-            return new Input.List(labelDOM);
-        }
-
-        switch (labelDOM.control.nodeName.toLowerCase()) {
-            case 'select':
-                return new Input.Selection(labelDOM);
-            default:
-                return new Input.Text(labelDOM);
-        }
-        return input;
-    }
-
     constructor(formDOM) {
         this.structure = {};
         this.element = formDOM;
@@ -182,7 +221,7 @@ class Form {
             const inputs = {};
             for (const labelDOM of sectionDOM.querySelectorAll('label')) {
                 const name = labelDOM.textContent;
-                const input = Form.initInputElement(labelDOM);
+                const input = initInputElement(labelDOM);
                 this.values.set([legend, name], input);
                 inputs[name] = input;
                 if (name === 'Title') {
@@ -232,14 +271,10 @@ class Form {
                     section[name].setEnabled(false);
                     continue;
                 }
-                const newInput = jsonObject[legend][name];
-                const newValue = newInput[newInput.type];
+                const newReducedInput = jsonObject[legend][name];
+                const newValue = newReducedInput[newReducedInput.type];
                 const oldInput = section[name];
-                oldInput.element.value = newValue;
-                oldInput[oldInput.type] = newValue;
-                if (newValue) {
-                    section[name].setEnabled(true);
-                }
+                oldInput.setValue(newValue);
             }
         }
     }
@@ -283,7 +318,7 @@ class Form {
     }
 }
 
-const autoSaveSupported = (typeof(Storage) !== 'undefined');
+const autoSaveSupported = (typeof (Storage) !== 'undefined');
 const autoSaveName = 'latestForm';
 const autoSaveStatusDOM = document.getElementById('autosave-status');
 const autoSaveTimeoutDelay = 1000;
