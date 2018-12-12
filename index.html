@@ -24,11 +24,18 @@
 
 <body>
 	<header>
-		<h1>Review Form</h1>
+		<h1>Review Form <!-- Version 1.0 --></h1>
 		<h2>Technical Paper / Computer Science</h2>
 	</header>
 	<main>
 		<form id="review" autocomplete>
+			<section>
+				<h3>Primer</h3>
+				<ul>
+					<li><a href="https://www.eg.org/wp/eurographics-publications/guidelines/">Eurographics - Reviewers' Guidelines</a></li>
+					<li><a href="https://s2018.siggraph.org/conference/conference-overview/technical-papers/technical-papers-reviewer-instructions/">SIGGRAPH - Technical Papers Reviewer Instructions</a></li>
+				</ul>
+			</section>
 			<fieldset>
 				<legend>General</legend>
 				<ul>
@@ -44,7 +51,7 @@
 						<p class="help">Briefly describe the paper and its contribution to computer graphics and interactive techniques.
 							Please give your assessment of the scope and magnitude of the paper's contribution.</p>
 						<div>
-							<textarea required id="description" name="description" rows="5" placeholder="Brief Summary" minlength="40"></textarea>
+							<textarea required id="description" name="description" rows="5" placeholder="Brief Summary" minlength="40" data-outsize-length="400" data-help-text="asdf"></textarea>
 						</div>
 					</li>
 				</ul>
@@ -53,15 +60,15 @@
 				<legend>Feedback</legend>
 				<ul>
 					<li>
-						<label for="strengths">Strengths</label>
+						<label for="strengths"><input type="checkbox" />Strengths</label>
 						<div>
-							<textarea id="strengths" name="strengths" rows="5" placeholder="Discuss the strengths."></textarea>
+							<textarea id="strengths" name="strengths" rows="5" placeholder="Discuss the strengths." data-outsize-length="400"></textarea>
 						</div>
 					</li>
 					<li>
 						<label for="weaknesses">Weaknesses</label>
 						<div>
-							<textarea id="weaknesses" name="weaknesses" rows="5" placeholder="Discuss the weaknesses. Including suggestions for improvements."></textarea>
+							<textarea id="weaknesses" name="weaknesses" rows="5" placeholder="Discuss the weaknesses. Including suggestions for improvements." data-outsize-length="400"></textarea>
 						</div>
 					</li>
 				</ul>
@@ -153,11 +160,15 @@
 		</section>
 		<hr>
 		<section>
+				<section id="score">
+					<span>Score:</span>
+					<output id="review-score" form="review">0</output>
+				</section>
 			<section id="autosave">
 				<span>Autosave:</span>
 				<i id="autosave-status" class="far fa-check-circle"></i>
 			</section>
-			<button id="reset-action" onclick="FORM.reset()"><i class="fas fa-eraser"></i>Clear all Inputs</button>
+			<button id="reset-action" onclick="clearForm()"><i class="fas fa-eraser"></i>Clear all Inputs</button>
 			<!-- <button id="clipboard-load-action" onclick=""><i class="far fa-clipboard"></i>Load from Clipboard</button> -->
 		</section>
 	</aside>

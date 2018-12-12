@@ -4,6 +4,7 @@ class Input {
     constructor(inputDOM, type, onChange) {
         this.element = inputDOM;
         this.type = type;
+        this.enabled = true;
         this.onChange = onChange;
         const changeAutoSave = evt => {
             startAutoSave();
@@ -11,6 +12,12 @@ class Input {
         };
         inputDOM.addEventListener('input', changeAutoSave);
         inputDOM.addEventListener('change', changeAutoSave);
+        inputDOM.labels.forEach((label) => {
+            console.log('add checkbox for disabling to ', label);
+		});
+		if(inputDOM.dataset.helpText) {
+			console.log('create help: ', inputDOM.dataset.helpText);
+		}
     }
 
     get value() {
@@ -30,6 +37,9 @@ Input.Text = class extends Input {
         super(inputDOM, 'text', () => {
             this.text = inputDOM.value;
         });
+        if (inputDOM.minLength > 0) {
+            console.log('Add character counter to', inputDOM);
+        }
         this.onChange();
     }
 
@@ -116,7 +126,12 @@ class Form {
             // inputs: inputs
             // };
         }
-    }
+	}
+	
+	calculatedScore() {
+		// todo
+		return 0;
+	}
 
     reset() {
         this.element.reset();
@@ -350,3 +365,9 @@ const Outputter = {
         downloadFile(filename, mimeType(), formattedOutput);
     }
 };
+
+function clearForm() {
+    if (confirm("Are you sure? This will erase all written content from your review!")) {
+        FORM.reset();
+    }
+}
