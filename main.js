@@ -41,7 +41,11 @@ Input.Text = class extends Input {
     };
 
     markdown() {
-        return this.isEmpty() ? `\`${this.placeholder}\`` : this.value;
+		let md = `*${this.placeholder}*`;
+		if(!this.isEmpty()) {
+			md += `\n\n> ${this.value}`;
+		}
+		return md;
     }
 };
 Input.Selection = class extends Input {
