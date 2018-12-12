@@ -90,6 +90,35 @@
 				</ul>
 			</fieldset>
 			<fieldset>
+				<legend>Additional Remarks</legend>
+				<ul>
+					<li>
+						<label for="remark-type">Add Remark</label>
+						<div>
+							<input required type="text" id="remark-type" name="remark-type" list="remark-type-suggestions" placeholder="Remark Type or Category" />
+							<datalist id="remark-type-suggestions">
+								<option>Missing Reference (related Work)</option>
+							</datalist>
+							<input required type="text" id="remark-position" name="remark-position" placeholder="Remark Position (Page, Paragraph)" />
+							<input required type="text" id="remark-content" name="remark-content" placeholder="Remark Text" />
+							<button>Add</button>
+<!--
+• Fehlende Referenz (verwandte Arbeit),
+• Fehlender Verweis auf Abbildungen, Tabellen, Listen, Algorithmen, etc.,
+• Grammatikfehler oder Rechtschreibfehler, optional mit Korrekturvorschlag,
+• Fehlende Begriffsdefinition,
+• Ungünstige/Missverständliche Wortwahl optional mit Vorschlag,
+• Formatierungsfehler oder -problem
+-->
+						</div>
+						<hr />
+						<ul>
+							<li>Remark .... <button>Remove</button></li>
+						</ul>
+					</li>
+				</ul>
+			</fieldset>
+			<fieldset>
 				<legend>About Yourself</legend>
 				<ul>
 					<li>
