@@ -334,6 +334,20 @@ main form {
     }
 }
 
+ul#remark-list li {
+    display: flex;
+
+    >* {
+        flex: 1 1 auto;
+    }
+
+    input,
+    button {
+        width: fit-content;
+        flex: 0 1 auto;
+    }
+}
+
 #nav-bar {
     grid-area: preview;
     z-index: 2;

@@ -142,7 +142,6 @@ Input.List = class extends Input {
         this.createBtn = document.getElementById(labelDOM.dataset.elementsAdd);
         this.createBtn.addEventListener('click', () => this.addElement());
         this.elementList = document.getElementById(labelDOM.dataset.elementsList);
-        // this.elements = [];
         this.onChange();
     }
 
@@ -152,7 +151,7 @@ Input.List = class extends Input {
 
     get elements() {
         return [...this.elementList.children]
-        .fiter((child) => child && child.querySelector('p'))
+        .filter((child) => child && child.querySelector('p'))
         .map((child) => {
             const p = child.querySelector('p');
             return p.textContent;
@@ -160,9 +159,12 @@ Input.List = class extends Input {
     }
 
     addElement() {
-        // <input type="text" id="remark-type" name="remark-type" list="remark-type-suggestions"
-        // placeholder="Remark Type or Category" />
         const li = document.createElement('li');
+        const typeInput = document.createElement('input');
+        typeInput.type='text';
+        typeInput.setAttribute('list', 'remark-type-suggestions');
+        typeInput.placeholder='Remark Type or Category';
+        li.appendChild(typeInput);
         const textarea = document.createElement('textarea');
         textarea.rows = 2;
         textarea.placeholder = 'Position (Page, Paragraph); Describe the remark and suggest alternatives';
@@ -170,13 +172,12 @@ Input.List = class extends Input {
         textarea.addEventListener('input', this.autoSave);
         textarea.addEventListener('change', this.autoSave);
         li.appendChild(textarea);
-        const removeBtn = document.createElement('input');
+        const removeBtn = document.createElement('button');
         removeBtn.type = 'button';
         removeBtn.innerHTML = '<i class="far fa-trash-alt"></i> Remove';
         removeBtn.addEventListener('click', () => li.remove());
         li.appendChild(removeBtn);
         this.elementList.appendChild(li);
-        console.log(this.elementList);
     }
 
     reducedObject() {
