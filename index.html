@@ -145,6 +145,8 @@
                     </li>
                     <hr />
                     <li>
+                        <!-- todo: move checkbox & label to h3 heading -->
+                        <!-- todo: implement collapsible box -->
                         <h3>Related Work</h3>
                         <ul>
                             <li>
@@ -221,7 +223,28 @@
                         </ul>
                     </li>
                     <li>
-
+                        <h3>Writing and Expression</h3>
+                        <ul>
+                            <li>
+                                <label for="rating-writing-expression">Writing and Expression</label>
+                                <div>
+                                    <select required id="rating-writing-expression" name="rating-writing-expression"
+                                        data-help-text="
+                                        Evaluate the writing and expression in the paper. The text field is not mandatory, but please use it if you wish to make specific comments on the writing.">
+                                        <option value="5">Well written and expressed</option>
+                                        <option value="3">Mostly well written; recommendations below for changes if accepted</option>
+                                        <option value="1">Not well written, with frequent grammatical, stylistic, or structural problems</option>
+                                    </select>
+                                </div>
+                            </li>
+                            <li>
+                                <label for="rating-writing-expression-explanation">Explain your rating</label>
+                                <div>
+                                    <textarea id="rating-writing-expression-explanation" name="rating-writing-expression-explanation"
+                                        rows="2" placeholder="Explain your rating."></textarea>
+                                </div>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </fieldset>
