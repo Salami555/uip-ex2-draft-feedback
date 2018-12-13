@@ -91,9 +91,10 @@ Input.Text = class extends Input {
             this.text = this.element.value;
         });
         this.text = null;
-        if (this.element.minLength > 0) {
-            console.log('Add character counter to', this.element);
-        }
+        // todo
+        // if (this.element.minLength > 0) {
+            // console.log('Add character counter to', this.element);
+        // }
         this.onChange();
     }
 
@@ -163,14 +164,17 @@ Input.List = class extends Input {
 
     setValue(newValue) {
         // todo
+        console.log(newValue);
     }
 
     get elements() {
         return [...this.elementList.children]
-        .filter((child) => child && child.querySelector('p'))
-        .map((child) => {
-            const p = child.querySelector('p');
-            return p.textContent;
+        .filter(li => !!li)
+        .map(li => {
+            return {
+                type: li.querySelector('.remark-type'),
+                content: li.querySelector('.remark-content')
+            };
         });
     }
 
@@ -180,11 +184,13 @@ Input.List = class extends Input {
         typeInput.type='text';
         typeInput.setAttribute('list', 'remark-type-suggestions');
         typeInput.placeholder='Remark Type or Category';
+        typeInput.classList.add('remark-type');
         li.appendChild(typeInput);
         const textarea = document.createElement('textarea');
         textarea.rows = 2;
         textarea.placeholder = 'Position (Page, Paragraph);\nDescribe the remark and suggest alternatives';
         textarea.minLength = 20;
+        textarea.classList.add('remark-content');
         textarea.addEventListener('input', this.autoSave);
         textarea.addEventListener('change', this.autoSave);
         li.appendChild(textarea);
@@ -199,14 +205,17 @@ Input.List = class extends Input {
     reducedObject() {
         return {
             type: this.type,
-            elements: this.elements
+            elements: this.elements.map(element => ({
+                type: element.type.value,
+                content: element.content.value
+            }))
         }
     }
 
     markdown() {
         const list = [];
-        this.elements.forEach((value, key) => {
-            list.push(`  - ${value}`);
+        this.elements.forEach((element) => {
+            list.push(`  - [${element.type.value}] ${element.content.value}`);
         });
         return list.join('\n');
     }
