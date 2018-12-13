@@ -60,6 +60,14 @@ class Input {
         return !this.element.disabled;
     }
 
+    get countScore() {
+        return this.enabled && this.element.required;
+    }
+
+    get score() {
+        return this.element.checkValidity() ? 1 : 0;
+    }
+
     setValue(newValue) {
         this.element.value = newValue;
         this[this.type] = newValue;
@@ -117,6 +125,10 @@ Input.Selection = class extends Input {
         this.onChange();
     }
 
+    get countScore() {
+        return false;
+    }
+
     reducedObject() {
         const choices = {};
         this.choices.forEach((value, key) => (choices[key] = value));
@@ -145,8 +157,12 @@ Input.List = class extends Input {
         this.onChange();
     }
 
-    setValue(newValue) {
+    get countScore() {
+        return false;
+    }
 
+    setValue(newValue) {
+        // todo
     }
 
     get elements() {
@@ -167,7 +183,7 @@ Input.List = class extends Input {
         li.appendChild(typeInput);
         const textarea = document.createElement('textarea');
         textarea.rows = 2;
-        textarea.placeholder = 'Position (Page, Paragraph); Describe the remark and suggest alternatives';
+        textarea.placeholder = 'Position (Page, Paragraph);\nDescribe the remark and suggest alternatives';
         textarea.minLength = 20;
         textarea.addEventListener('input', this.autoSave);
         textarea.addEventListener('change', this.autoSave);
@@ -237,9 +253,11 @@ class Form {
         }
     }
 
-    calculatedScore() {
-        // todo
-        return 0;
+    calculateScore() {
+        const enabledInputs = [... this.values.values()].filter(input => input.countScore);
+        const score = enabledInputs.reduce((sum, input) => sum + input.score, 0)
+            / enabledInputs.length;
+        return `${(100 * score).toFixed(1)}%`;
     }
 
     reset() {
@@ -319,6 +337,8 @@ class Form {
     }
 }
 
+const scoreDOM = document.getElementById('review-score');
+
 const autoSaveSupported = (typeof (Storage) !== 'undefined');
 const autoSaveName = 'latestForm';
 const autoSaveStatusDOM = document.getElementById('autosave-status');
@@ -328,6 +348,7 @@ const autoSaveClassesDone = ['far', 'fa-check-circle'].join(' ');
 let autoSaveTimeout = null;
 
 function startAutoSave() {
+    scoreDOM.value = FORM.calculateScore();
     if (!autoSaveSupported)
         return;
     autoSaveStatusDOM.className = autoSaveClassesWork;
@@ -359,6 +380,7 @@ function load(form) {
         }
     }
     autoSaveStatusDOM.className = autoSaveClassesDone;
+    startAutoSave();
 }
 
 const FORM = new Form(document.getElementById('review'));
